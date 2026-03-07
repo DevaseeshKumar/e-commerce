@@ -315,7 +315,7 @@ We welcome contributions! Here's how you can help:
 
 ## Support & Contact
 
-- **Email**: support@shopeasy.com
+- **Email**: devaseesh.sonti2005@gmail.com
 - **Issues**: [GitHub Issues](https://github.com/DevaseeshKumar/e-commerce/issues)
 - **Discussions**: [GitHub Discussions](https://github.com/DevaseeshKumar/e-commerce/discussions)
 - **Documentation**: See [/docs](/docs) folder
