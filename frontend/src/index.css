@@ -1,0 +1,54 @@
+@import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ── CSS Design Tokens ── */
+:root {
+  --bg: #F5F5F7;
+  --bg-secondary: #FFFFFF;
+  --bg-glass: rgba(255, 255, 255, 0.75);
+  --bg-card: #FFFFFF;
+  --text: #1D1D1F;
+  --text-secondary: #86868B;
+  --text-tertiary: #AEAEB2;
+  --border: rgba(0, 0, 0, 0.05);
+  --border-strong: rgba(0, 0, 0, 0.1);
+  --accent: #0071E3;
+  --accent-hover: #0077ED;
+  --accent-light: rgba(0, 113, 227, 0.08);
+  --success: #34C759;
+  --success-light: rgba(52, 199, 89, 0.12);
+  --danger: #FF3B30;
+  --danger-light: rgba(255, 59, 48, 0.12);
+  --warning: #FF9500;
+  --warning-light: rgba(255, 149, 0, 0.12);
+  --shadow: 0 4px 24px rgba(0, 0, 0, 0.04);
+  --shadow-lg: 0 12px 48px rgba(0, 0, 0, 0.08);
+  --glass-blur: blur(24px);
+  --nav-bg: rgba(255, 255, 255, 0.75);
+}
+
+[data-theme="dark"] {
+  --bg: #000000;
+  --bg-secondary: #1C1C1E;
+  --bg-glass: rgba(28, 28, 30, 0.75);
+  --bg-card: #1C1C1E;
+  --text: #F5F5F7;
+  --text-secondary: #86868B;
+  --text-tertiary: #48484A;
+  --border: rgba(255, 255, 255, 0.08);
+  --border-strong: rgba(255, 255, 255, 0.15);
+  --accent: #0A84FF;
+  --accent-hover: #409CFF;
+  --accent-light: rgba(10, 132, 255, 0.15);
+  --success: #32D74B;
+  --success-light: rgba(50, 215, 75, 0.15);
+  --danger: #FF453A;
+  --danger-light: rgba(255, 69, 58, 0.15);
+  --warning: #FF9F0A;
+  --warning-light: rgba(255, 159, 10, 0.15);
+  --shadow: 0 4px 24px rgba(0, 0, 0, 0.2);
+  --shadow-lg: 0 12px 48px rgba(0, 0, 0, 0.4);
+  --glass-blur: blur(24px);
+  --nav-bg: rgba(28, 28, 30, 0.75);
+}
+
