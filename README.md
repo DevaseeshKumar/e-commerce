@@ -50,7 +50,6 @@
 | bcrypt | Password hashing |
 | Stripe | Payment processing |
 | Nodemailer | Transactional emails |
-| Cloudinary | File/image uploads |
 | crypto | Secure token generation |
 
 ---
@@ -61,7 +60,7 @@
 - **Secure Registration** — Create accounts with validation, email confirmation, and welcome emails
 - **Smart Login** — JWT-based authentication with automatic plaintext password migration
 - **Password Recovery** — Secure reset tokens (1 hour validity) sent via email
-- **Profile Management** — Update profile information and upload profile pictures to Cloudinary
+- **Profile Management** — Update profile information and manage user profiles
 - **Session Management** — Safe logout with token invalidation
 
 ### Shopping Experience
@@ -81,7 +80,7 @@
 - **User Management** — Monitor users, roles, and their order history with CRUD operations
 - **Analytics** — Dashboard with charts and metrics (powered by Recharts)
 - **Delivery Tracking** — Automated delivery confirmation emails for customers
-- **Product Management** — Add, edit, and manage products with image uploads to Cloudinary
+- **Product Management** — Add, edit, and manage products
 
 ### Communication
 - **Automated Emails** — Transactional emails for registration, password reset, orders, and delivery
@@ -158,11 +157,6 @@ SMTP_PORT=587
 SMTP_EMAIL=your-email@gmail.com
 SMTP_PASSWORD=your-app-password
 
-# Cloudinary - For image uploads
-CLOUDINARY_NAME=your_cloudinary_name
-CLOUDINARY_API_KEY=your_api_key
-CLOUDINARY_API_SECRET=your_api_secret
-
 # Stripe - For payment processing
 STRIPE_SECRET_KEY=sk_test_your_secret_key_here
 STRIPE_PUBLIC_KEY=pk_test_your_public_key_here
@@ -183,7 +177,6 @@ STRIPE_PUBLIC_KEY=pk_test_your_public_key_here
 │   │   ├── Product.js            # Product schema
 │   │   └── Order.js              # Order schema
 │   ├── config/
-│   │   ├── cloudinary.js         # Cloudinary image upload config
 │   │   └── email.js              # Email templates & SMTP config
 │   ├── middleware/
 │   │   ├── auth.js               # JWT authentication middleware
