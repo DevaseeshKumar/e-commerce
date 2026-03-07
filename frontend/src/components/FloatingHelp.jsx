@@ -4,7 +4,7 @@ const FloatingHelp = () => {
     return (
         <Link 
             to="/help"
-            className="fixed bottom-6 right-6 z-50 flex items-center justify-center w-14 h-14 bg-gradient-to-r from-blue-600 to-violet-600 text-white rounded-full shadow-xl hover:shadow-2xl hover:scale-110 transition-all duration-300"
+            className="fixed bottom-6 right-6 z-50 flex items-center justify-center w-14 h-14 bg-orange-600 hover:bg-orange-700 text-white rounded-full shadow-xl hover:shadow-2xl hover:scale-110 transition-all duration-300 dark:bg-orange-600 dark:hover:bg-orange-700"
             title="Help & Support"
         >
             <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>

@@ -150,22 +150,56 @@ The frontend dev server runs on `http://localhost:5173` and the backend on `http
 /
 ├── backend/
 │   ├── controllers/
-│   │   └── userController.js   # All API logic
+│   │   ├── UserController.js     # User authentication & profile logic
+│   │   └── ProductController.js  # Product management logic
 │   ├── models/
-│   │   ├── User.js
-│   │   ├── Product.js
-│   │   └── Order.js
+│   │   ├── User.js               # User schema
+│   │   ├── Product.js            # Product schema
+│   │   └── Order.js              # Order schema
 │   ├── config/
-│   │   └── email.js            # Email templates & sender
+│   │   ├── cloudinary.js         # Cloudinary image upload config
+│   │   └── email.js              # Email templates & SMTP config
 │   ├── middleware/
-│   └── routes/
+│   │   ├── auth.js               # JWT authentication middleware
+│   │   ├── rateLimiter.js        # Rate limiting middleware
+│   │   └── role.js               # Role-based access control
+│   ├── routes/
+│   │   ├── UserRoutes.js         # User API routes
+│   │   └── ProductRoutes.js      # Product API routes
+│   ├── server.js                 # Express app entry point
+│   └── package.json
 └── frontend/
     ├── src/
     │   ├── pages/
+    │   │   ├── Home.jsx
+    │   │   ├── Login.jsx & Signup.jsx
+    │   │   ├── ViewProduct.jsx & UserViewProduct.jsx
+    │   │   ├── Cart.jsx & Wishlist.jsx
+    │   │   ├── Orders.jsx
+    │   │   ├── AdminDashboard.jsx, AdminOrders.jsx, AdminProfile.jsx, ViewUsers.jsx
+    │   │   ├── Profile.jsx & Dashboard.jsx
+    │   │   ├── ForgotPassword.jsx & ResetPassword.jsx
+    │   │   ├── Help.jsx & About.jsx
+    │   │   └── AddProduct.jsx
     │   ├── components/
+    │   │   ├── Navbar.jsx, AdminNavbar.jsx, UserNavbar.jsx
+    │   │   ├── Footer.jsx
+    │   │   ├── ProtectedRoute.jsx
+    │   │   ├── ConfirmModal.jsx
+    │   │   └── FloatingHelp.jsx
+    │   ├── layout/
+    │   │   ├── MainLayout.jsx
+    │   │   ├── UserLayout.jsx
+    │   │   └── AdminLayout.jsx
+    │   ├── context/
+    │   │   └── ThemeContext.jsx
+    │   ├── config/
+    │   │   └── api.js
+    │   ├── App.jsx
     │   └── main.jsx
     ├── index.html
-    └── vite.config.js
+    ├── vite.config.js
+    └── package.json
 ```
 
 ---
