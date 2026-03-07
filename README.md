@@ -1,13 +1,35 @@
-# 🛒 E-Commerce Platform
+# ShopEasy - E-Commerce Platform
 
-A full-stack e-commerce web application built with a **Node.js/Express** backend and a **React + Vite** frontend, featuring product management, cart & wishlist, Stripe payments, order tracking, and admin controls.
+> A modern, fully-featured e-commerce platform with seamless shopping experience, secure payments, and powerful admin controls.
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Node.js](https://img.shields.io/badge/Node.js-18+-green)](https://nodejs.org/)
+[![React](https://img.shields.io/badge/React-19-blue)](https://react.dev/)
+[![MongoDB](https://img.shields.io/badge/MongoDB-Latest-green)](https://www.mongodb.com/)
 
 ---
 
-## 🚀 Tech Stack
+## Platform Highlights
+
+<table>
+<tr>
+<td width="33%"><b>Lightning Fast</b><br/>React 19 + Vite for optimal performance</td>
+<td width="33%"><b>Secure</b><br/>JWT authentication & bcrypt encryption</td>
+<td width="33%"><b>Payment Ready</b><br/>Stripe integration for online payments</td>
+</tr>
+<tr>
+<td><b>Modern UI</b><br/>Tailwind CSS + Dark Mode Support</td>
+<td><b>Fully Responsive</b><br/>Works seamlessly on all devices</td>
+<td><b>Powerful Admin</b><br/>Complete dashboard & user management</td>
+</tr>
+</table>
+
+---
+
+## Tech Stack
 
 ### Frontend
-| Package | Purpose |
+| Package | Purpose |   
 |---|---|
 | React 19 + Vite | UI framework & build tool |
 | React Router DOM | Client-side routing |
@@ -28,123 +50,127 @@ A full-stack e-commerce web application built with a **Node.js/Express** backend
 | bcrypt | Password hashing |
 | Stripe | Payment processing |
 | Nodemailer | Transactional emails |
-| Multer | File/image uploads |
+| Cloudinary | File/image uploads |
 | crypto | Secure token generation |
 
 ---
 
-## ✨ Features
+## Core Features
 
-### 🔐 Authentication & User Management
-- **Register** — Create an account with name, email, and password (min 6 characters). Sends a welcome email on success.
-- **Login** — JWT-based login with a 7-day token. Auto-migrates legacy plaintext passwords to bcrypt on first login.
-- **Forgot Password** — Generates a secure reset token (valid 1 hour) and emails a reset link.
-- **Reset Password** — Validates the token and updates the password securely.
-- **View Profile** — Returns the authenticated user's profile (excludes sensitive fields).
-- **Update Profile** — Update name, email, and delivery address.
-- **Upload Profile Picture** — Upload a profile image via Multer.
-- **Logout** — Stateless logout confirmation.
+### Authentication & User Management
+- **Secure Registration** — Create accounts with validation, email confirmation, and welcome emails
+- **Smart Login** — JWT-based authentication with automatic plaintext password migration
+- **Password Recovery** — Secure reset tokens (1 hour validity) sent via email
+- **Profile Management** — Update profile information and upload profile pictures to Cloudinary
+- **Session Management** — Safe logout with token invalidation
 
----
+### Shopping Experience
+- **Product Browsing** — Explore products with filtering, sorting, and search functionality
+- **Smart Cart** — Real-time stock validation, quantity management, and cart persistence
+- **Wishlist** — Save favorite products for later purchase
+- **Order Management** — Track orders, view order history, and cancel pending orders
 
-### 🛍️ Cart
-- **Add to Cart** — Adds a product with quantity validation against live stock levels. Increments quantity if already in cart.
-- **View Cart** — Returns populated cart items and the user's saved address.
-- **Remove from Cart** — Removes a specific item by product ID.
-- **Update Cart Quantity** — Updates the quantity of an existing cart item with stock validation.
+### Payment Processing
+- **Multiple Payment Methods** — Support for Cash on Delivery (COD) and Stripe online payments
+- **Secure Checkout** — Integrated Stripe payment gateway with PCI compliance
+- **Order Confirmation** — Automatic order confirmation emails with tracking details
+- **Payment Verification** — Idempotent verification to prevent duplicate charges
 
----
+### Admin Dashboard
+- **Order Management** — View, filter, and update order status through the workflow
+- **User Management** — Monitor users, roles, and their order history with CRUD operations
+- **Analytics** — Dashboard with charts and metrics (powered by Recharts)
+- **Delivery Tracking** — Automated delivery confirmation emails for customers
+- **Product Management** — Add, edit, and manage products with image uploads to Cloudinary
 
-### ❤️ Wishlist
-- **Add to Wishlist** — Saves a product to the user's wishlist (no duplicates).
-- **Remove from Wishlist** — Removes a product from the wishlist.
-- **View Wishlist** — Returns all wishlisted products, fully populated.
-
----
-
-### 📦 Orders
-- **Place Order (COD / Online)** — Creates an order from the current cart, decrements stock, clears the cart, and sends an order confirmation email.
-- **View My Orders** — Returns all orders for the authenticated user, with product and seller details, sorted newest first.
-- **Cancel Order** — Cancels a pending or confirmed order and restores product stock.
-- **Stripe Checkout** — Creates a Stripe Checkout session with line items from the cart.
-- **Verify Stripe Payment** — Verifies a completed Stripe session and fulfills the order (idempotent — prevents duplicate fulfillment on page refresh).
+### Communication
+- **Automated Emails** — Transactional emails for registration, password reset, orders, and delivery
+- **Help Support** — Customer support contact form with admin email forwarding
+- **Real-time Notifications** — Toast notifications for user actions and feedback
 
 ---
 
-### 🛠️ Admin Panel
-- **View All Orders** — Lists every order across all users with full product and user details.
-- **Update Order Status** — Moves an order through the lifecycle: `pending → confirmed → shipped → out_for_delivery → delivered → cancelled`. Sends a delivery confirmation email when marked as delivered.
-- **View All Users** — Lists all users (excluding the requesting admin) with their order history.
-- **Update User** — Modify another user's name, email, or role (cannot self-edit).
-- **Delete User** — Permanently deletes a user account (cannot self-delete).
+## � Prerequisites
+
+Before getting started, ensure you have installed:
+- **Node.js** (v18 or higher)
+- **npm** or **yarn** package manager
+- **MongoDB** (local or Atlas cloud)
+- **Git** for version control
 
 ---
 
-### 📧 Email Notifications
-Transactional emails are sent automatically for:
-| Event | Recipient |
-|---|---|
-| New user registration | New user (welcome email) |
-| Forgot password | User (reset link) |
-| Order placed | Customer (order confirmation) |
-| Order delivered | Customer (delivery confirmation) |
-| Support message submitted | Admin inbox |
+## Quick Start Guide
+
+### 1. Clone & Setup
+```bash
+# Clone the repository
+git clone https://github.com/yourusername/e-commerce.git
+cd e-commerce
+```
+
+### 2. Backend Setup
+```bash
+cd backend
+npm install
+
+# Create .env file with required variables (see Environment Variables section)
+# Add your MongoDB URI, Stripe keys, email credentials, etc.
+
+npm run dev    # Start backend on http://localhost:5000
+```
+
+### 3. Frontend Setup
+```bash
+cd ../frontend
+npm install
+
+npm run dev    # Start frontend on http://localhost:5173
+```
+
+### 4. Open & Explore
+- Frontend: [http://localhost:5173](http://localhost:5173)
+- API: [http://localhost:5000/api](http://localhost:5000/api)
 
 ---
 
-### 💬 Help & Support
-- **Submit Help Message** — Accepts a name, email, and message from any visitor and forwards it to the admin's configured email address.
+## Environment Variables
 
----
-
-## 🔑 Environment Variables
-
-Create a `.env` file in the backend root:
+### Backend Configuration
+Create a `.env` file in the `backend/` directory:
 
 ```env
 # Server
 PORT=5000
-SESSION_SECRET=your_jwt_secret
+SESSION_SECRET=your_super_secret_jwt_key_here
 
 # Database
 MONGO_URI=mongodb://localhost:27017/ecommerce
+# Or use MongoDB Atlas:
+# MONGO_URI=mongodb+srv://username:password@cluster.mongodb.net/ecommerce
 
 # Client
 CLIENT_URL=http://localhost:5173
 
-# Email (SMTP)
-SMTP_HOST=smtp.example.com
+# Email (SMTP) - For transactional emails
+SMTP_HOST=smtp.gmail.com
 SMTP_PORT=587
-SMTP_EMAIL=you@example.com
-SMTP_PASSWORD=your_email_password
+SMTP_EMAIL=your-email@gmail.com
+SMTP_PASSWORD=your-app-password
 
-# Stripe
-STRIPE_SECRET_KEY=sk_test_...
+# Cloudinary - For image uploads
+CLOUDINARY_NAME=your_cloudinary_name
+CLOUDINARY_API_KEY=your_api_key
+CLOUDINARY_API_SECRET=your_api_secret
+
+# Stripe - For payment processing
+STRIPE_SECRET_KEY=sk_test_your_secret_key_here
+STRIPE_PUBLIC_KEY=pk_test_your_public_key_here
 ```
 
 ---
 
-## 🏃 Getting Started
-
-### Backend
-```bash
-cd backend
-npm install
-npm run dev
-```
-
-### Frontend
-```bash
-cd frontend
-npm install
-npm run dev
-```
-
-The frontend dev server runs on `http://localhost:5173` and the backend on `http://localhost:5000` by default.
-
----
-
-## 📁 Project Structure
+## Project Structure
 
 ```
 /
@@ -204,39 +230,135 @@ The frontend dev server runs on `http://localhost:5173` and the backend on `http
 
 ---
 
-## 📋 API Reference Summary
+## API Reference
 
+### Authentication Endpoints
 | Method | Endpoint | Description | Auth |
-|---|---|---|---|
-| POST | `/api/register` | Register new user | ❌ |
-| POST | `/api/login` | Login | ❌ |
-| POST | `/api/forgot-password` | Request password reset | ❌ |
-| POST | `/api/reset-password/:token` | Reset password | ❌ |
-| GET | `/api/profile` | Get profile | ✅ |
-| PUT | `/api/profile` | Update profile | ✅ |
-| POST | `/api/profile/picture` | Upload profile picture | ✅ |
-| POST | `/api/logout` | Logout | ✅ |
-| GET | `/api/cart` | Get cart | ✅ |
-| POST | `/api/cart` | Add to cart | ✅ |
-| DELETE | `/api/cart` | Remove from cart | ✅ |
-| PUT | `/api/cart` | Update cart quantity | ✅ |
-| POST | `/api/orders` | Place order | ✅ |
-| GET | `/api/orders` | View my orders | ✅ |
-| PUT | `/api/orders/:id/cancel` | Cancel order | ✅ |
-| POST | `/api/stripe/checkout` | Create Stripe session | ✅ |
-| POST | `/api/stripe/verify` | Verify Stripe payment | ✅ |
-| GET | `/api/wishlist` | Get wishlist | ✅ |
-| POST | `/api/wishlist` | Add to wishlist | ✅ |
-| DELETE | `/api/wishlist` | Remove from wishlist | ✅ |
-| POST | `/api/help` | Submit support message | ❌ |
-| GET | `/api/admin/orders` | All orders | 👑 Admin |
-| PUT | `/api/admin/orders/:id` | Update order status | 👑 Admin |
-| GET | `/api/admin/users` | All users with orders | 👑 Admin |
-| PUT | `/api/admin/users/:id` | Update user | 👑 Admin |
-| DELETE | `/api/admin/users/:id` | Delete user | 👑 Admin |
+|--------|----------|-------------|------|
+| POST | `/api/register` | Create new user account | Not Required |
+| POST | `/api/login` | Authenticate user | Not Required |
+| POST | `/api/forgot-password` | Request password reset link | Not Required |
+| POST | `/api/reset-password/:token` | Reset password with token | Not Required |
+| POST | `/api/logout` | Logout user | Required |
+
+### User Endpoints
+| Method | Endpoint | Description | Auth |
+|--------|----------|-------------|------|
+| GET | `/api/profile` | Get authenticated user profile | Required |
+| PUT | `/api/profile` | Update profile information | Required |
+| POST | `/api/profile/picture` | Upload profile picture | Required |
+
+### Cart Endpoints
+| Method | Endpoint | Description | Auth |
+|--------|----------|-------------|------|
+| GET | `/api/cart` | Retrieve user's cart | Required |
+| POST | `/api/cart` | Add product to cart | Required |
+| DELETE | `/api/cart` | Remove item from cart | Required |
+| PUT | `/api/cart` | Update cart item quantity | Required |
+
+### Order Endpoints
+| Method | Endpoint | Description | Auth |
+|--------|----------|-------------|------|
+| POST | `/api/orders` | Create new order | Required |
+| GET | `/api/orders` | Get user's orders | Required |
+| PUT | `/api/orders/:id/cancel` | Cancel pending order | Required |
+| POST | `/api/stripe/checkout` | Create Stripe checkout session | Required |
+| POST | `/api/stripe/verify` | Verify Stripe payment | Required |
+
+### Wishlist Endpoints
+| Method | Endpoint | Description | Auth |
+|--------|----------|-------------|------|
+| GET | `/api/wishlist` | Get user's wishlist | Required |
+| POST | `/api/wishlist` | Add product to wishlist | Required |
+| DELETE | `/api/wishlist` | Remove from wishlist | Required |
+
+### Support Endpoints
+| Method | Endpoint | Description | Auth |
+|--------|----------|-------------|------|
+| POST | `/api/help` | Submit support message | Not Required |
+
+### Admin Endpoints
+| Method | Endpoint | Description | Auth |
+|--------|----------|-------------|------|
+| GET | `/api/admin/orders` | View all orders | Admin Required |
+| PUT | `/api/admin/orders/:id` | Update order status | Admin Required |
+| GET | `/api/admin/users` | View all users | Admin Required |
+| PUT | `/api/admin/users/:id` | Update user information | Admin Required |
+| DELETE | `/api/admin/users/:id` | Delete user account | Admin Required |
 
 ---
 
-## 📜 License
+---
 
-MIT
+## Contributing
+
+We welcome contributions! Here's how you can help:
+
+1. **Fork** the repository
+2. **Create** a feature branch (`git checkout -b feature/AmazingFeature`)
+3. **Commit** your changes (`git commit -m 'Add AmazingFeature'`)
+4. **Push** to the branch (`git push origin feature/AmazingFeature`)
+5. **Open** a Pull Request
+
+---
+
+## Troubleshooting
+
+### Common Issues
+
+**Port already in use?**
+```bash
+# Change the PORT in .env file or kill the process using the port
+# On Windows: netstat -ano | findstr :5000
+# On Mac/Linux: lsof -i :5000
+```
+
+**MongoDB connection failed?**
+- Verify MongoDB is running locally or check your connection string
+- For Atlas, ensure your IP is whitelisted
+
+**Stripe/Email not working?**
+- Double-check your API keys in `.env`
+- Verify SMTP credentials for email service
+
+---
+
+## Support & Contact
+
+- **Email**: support@shopeasy.com
+- **Issues**: [GitHub Issues](https://github.com/yourusername/e-commerce/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/yourusername/e-commerce/discussions)
+- **Documentation**: See [/docs](/docs) folder
+
+---
+
+## License
+
+This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
+
+---
+
+## Authors & Contributors
+
+- **Devaseesh** - *Initial Development* - [GitHub](https://github.com/devaseesh)
+- See [CONTRIBUTORS.md](CONTRIBUTORS.md) for more information
+
+---
+
+## Acknowledgments
+
+- [React](https://react.dev/) - UI Library
+- [Tailwind CSS](https://tailwindcss.com/) - Styling
+- [Stripe](https://stripe.com/) - Payment Processing
+- [MongoDB](https://www.mongodb.com/) - Database
+- [Express.js](https://expressjs.com/) - Backend Framework
+
+---
+
+<div align="center">
+
+**Made with care for seamless shopping experiences**
+
+If you find this project helpful, please consider giving it a star!
+
+</div>
