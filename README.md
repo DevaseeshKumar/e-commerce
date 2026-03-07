@@ -94,7 +94,7 @@
 Before getting started, ensure you have installed:
 - **Node.js** (v18 or higher)
 - **npm** or **yarn** package manager
-- **MongoDB** (local or Atlas cloud)
+- **MongoDB** (local installation)
 - **Git** for version control
 
 ---
@@ -145,8 +145,6 @@ SESSION_SECRET=your_super_secret_jwt_key_here
 
 # Database
 MONGO_URI=mongodb://localhost:27017/ecommerce
-# Or use MongoDB Atlas:
-# MONGO_URI=mongodb+srv://username:password@cluster.mongodb.net/ecommerce
 
 # Client
 CLIENT_URL=http://localhost:5173
@@ -307,8 +305,7 @@ We welcome contributions! Here's how you can help:
 ```
 
 **MongoDB connection failed?**
-- Verify MongoDB is running locally or check your connection string
-- For Atlas, ensure your IP is whitelisted
+- Verify MongoDB is running locally
 
 **Stripe/Email not working?**
 - Double-check your API keys in `.env`
