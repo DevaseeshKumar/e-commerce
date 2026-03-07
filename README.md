@@ -104,7 +104,7 @@ Before getting started, ensure you have installed:
 ### 1. Clone & Setup
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/e-commerce.git
+git clone https://github.com/DevaseeshKumar/e-commerce.git
 cd e-commerce
 ```
 
@@ -316,8 +316,8 @@ We welcome contributions! Here's how you can help:
 ## Support & Contact
 
 - **Email**: support@shopeasy.com
-- **Issues**: [GitHub Issues](https://github.com/yourusername/e-commerce/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/yourusername/e-commerce/discussions)
+- **Issues**: [GitHub Issues](https://github.com/DevaseeshKumar/e-commerce/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/DevaseeshKumar/e-commerce/discussions)
 - **Documentation**: See [/docs](/docs) folder
 
 ---
