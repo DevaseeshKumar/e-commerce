@@ -74,14 +74,14 @@ const AdminDashboard = () => {
   ];
 
   return (
-    <div className="min-h-[calc(100vh-64px)] py-12 px-6 bg-gray-50 dark:bg-[#121212]">
+    <div className="min-h-[calc(100vh-64px)] py-8 sm:py-12 px-4 sm:px-6 bg-gray-50 dark:bg-[#121212]">
 
       <div className="max-w-7xl mx-auto">
 
         {/* HEADER */}
         <div className="mb-10">
 
-          <h1 className="text-3xl font-bold mb-2 text-gray-900 dark:text-gray-100">
+          <h1 className="text-2xl sm:text-3xl font-bold mb-2 text-gray-900 dark:text-gray-100">
             Admin Overview
           </h1>
 
@@ -138,7 +138,7 @@ const AdminDashboard = () => {
         {/* QUICK ACTIONS */}
         <div className="grid lg:grid-cols-2 gap-6 mt-6">
 
-          <div className="p-8 rounded-2xl border bg-white dark:bg-[#1C1C1E] border-gray-200 dark:border-white/10 shadow-sm">
+<div className="p-6 sm:p-8 rounded-2xl border bg-white dark:bg-[#1C1C1E] border-gray-200 dark:border-white/10 shadow-sm">
 
             <h3 className="text-xl font-bold mb-6 text-gray-900 dark:text-gray-100">
               Quick Actions

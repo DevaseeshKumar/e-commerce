@@ -41,7 +41,7 @@ const ResetPassword = () => {
 
     return (
         <div className="min-h-[calc(100vh-64px)] flex items-center justify-center p-6 bg-gray-50 dark:bg-[#121212]">
-            <div className="bg-white dark:bg-[#1C1C1E] border border-gray-200 dark:border-white/10 rounded-[20px] shadow-sm w-full max-w-md p-10 animate-[fadeInScale_0.25s_ease-out_forwards] text-gray-900 dark:text-gray-100">
+            <div className="bg-white dark:bg-[#1C1C1E] border border-gray-200 dark:border-white/10 rounded-[20px] shadow-sm w-full max-w-md p-6 sm:p-10 animate-[fadeInScale_0.25s_ease-out_forwards] text-gray-900 dark:text-gray-100">
                 <div className="text-center mb-8">
                     <h1 className="text-3xl font-bold tracking-tight mb-2">Create New Password</h1>
                     <p className="text-gray-600 dark:text-gray-400 text-sm">Please set a strong password for your account.</p>

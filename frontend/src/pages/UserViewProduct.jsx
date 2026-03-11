@@ -132,7 +132,7 @@ const UserViewProduct = () => {
   const closeModal = () => setSelectedProduct(null);
 
   return (
-    <div className="min-h-screen px-6 py-10 bg-gray-50 dark:bg-[#121212]">
+    <div className="min-h-screen px-4 sm:px-6 py-8 sm:py-10 bg-gray-50 dark:bg-[#121212]">
       <div className="max-w-7xl mx-auto">
 
         {/* Header */}
@@ -202,7 +202,13 @@ const UserViewProduct = () => {
               >
 
                 {/* Image */}
-                <div className="relative h-64 overflow-hidden bg-gray-100 dark:bg-neutral-800 cursor-pointer" onClick={() => openProductModal(p)}>
+                <div
+                  role="button"
+                  tabIndex={0}
+                  className="relative h-64 overflow-hidden bg-gray-100 dark:bg-neutral-800 cursor-pointer"
+                  onClick={() => openProductModal(p)}
+                  onKeyDown={(e) => e.key === "Enter" && openProductModal(p)}
+                >
 
                   {p.image ? (
                     <img

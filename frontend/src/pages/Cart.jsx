@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import ConfirmModal from "../components/ConfirmModal";
 import { loadStripe } from "@stripe/stripe-js";
@@ -8,6 +8,7 @@ import API from '../config/api';
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY || "pk_test_TYooMQauvdEDq54NiTphI7jx");
 
 const Cart = () => {
+    const navigate = useNavigate();
     const [cart, setCart] = useState([]);
     const [address, setAddress] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -33,10 +34,10 @@ const Cart = () => {
     useEffect(() => {
         fetchCart();
 
-        const urlParams = new URLSearchParams(window.location.search);
+        const urlParams = new URLSearchParams(globalThis.location.search);
         if (urlParams.get("payment") === "cancelled") {
             toast.error("Payment was cancelled");
-            window.history.replaceState({}, '', '/cart');
+            globalThis.history.replaceState({}, '', '/cart');
         }
     }, []);
 
@@ -99,7 +100,7 @@ const Cart = () => {
                 if (res.ok) {
                     toast.success("Order placed successfully!");
                     setCart([]);
-                    window.location.href = "/orders";
+                    navigate("/orders");
                 } else toast.error(data.error);
             }
         } catch (err) { toast.error("Checkout failed"); }
@@ -107,7 +108,7 @@ const Cart = () => {
     };
 
     const subtotal = cart.reduce((sum, item) => sum + (item.product.price * item.quantity), 0);
-    const shipping = subtotal > 0 ? (subtotal > 500 ? 0 : 25) : 0;
+    const shipping = subtotal === 0 ? 0 : subtotal > 500 ? 0 : 25;
     const total = subtotal + shipping;
 
     if (loading) return (
@@ -117,7 +118,7 @@ const Cart = () => {
     );
 
     return (
-        <div className="min-h-[calc(100vh-64px)] py-12 px-6 bg-gray-50 dark:bg-[#121212]">
+        <div className="min-h-[calc(100vh-64px)] py-8 sm:py-12 px-4 sm:px-6 bg-gray-50 dark:bg-[#121212]">
             <div className="max-w-7xl mx-auto">
                 <div className="mb-10 animate-in">
                     <h1 className="text-3xl font-bold tracking-tight mb-2">Your Cart</h1>
@@ -125,7 +126,7 @@ const Cart = () => {
                 </div>
 
                 {cart.length === 0 ? (
-                    <div className="bg-white dark:bg-[#1C1C1E] border border-gray-200 dark:border-white/10 rounded-2xl shadow-sm p-16 text-center animate-in" style={{ animationDelay: '100ms' }}>
+                    <div className="bg-white dark:bg-[#1C1C1E] border border-gray-200 dark:border-white/10 rounded-2xl shadow-sm p-8 sm:p-16 text-center animate-in" style={{ animationDelay: '100ms' }}>
                         <div className="w-16 h-16 bg-gray-100 dark:bg-black rounded-full flex items-center justify-center mx-auto mb-4 text-gray-400 dark:text-gray-500">
                             <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}><path strokeLinecap="round" strokeLinejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" /></svg>
                         </div>
@@ -207,8 +208,8 @@ const Cart = () => {
                                 </div>
 
                                 <div className="space-y-4 mb-8">
-                                    <label className="block text-[13px] font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">Payment Method</label>
-                                    <div className="grid grid-cols-2 gap-4">
+                                    <label htmlFor="payment-method" className="block text-[13px] font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">Payment Method</label>
+                                    <div id="payment-method" className="grid grid-cols-2 gap-4">
                                         <button
                                             onClick={() => setPaymentMethod("online")}
                                             className={`p-3 rounded-xl border flex flex-col items-center justify-center gap-2 transition-all ${paymentMethod === "online" ? "border-blue-500 bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400" : "border-gray-300 dark:border-white/10 text-gray-600 dark:text-gray-400 hover:border-gray-900 dark:hover:border-white"}`}

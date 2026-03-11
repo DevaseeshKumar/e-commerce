@@ -114,7 +114,7 @@ const AddProduct = () => {
 
   return (
 
-  <div className="min-h-[calc(100vh-64px)] py-12 px-6 bg-gray-50 dark:bg-[#121212]">
+  <div className="min-h-[calc(100vh-64px)] py-8 sm:py-12 px-4 sm:px-6 bg-gray-50 dark:bg-[#121212]">
 
   <div className="max-w-4xl mx-auto">
 
@@ -167,7 +167,7 @@ const AddProduct = () => {
 
   {/* CATEGORY PRICE STOCK */}
 
-  <div className="grid grid-cols-3 gap-5">
+  <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
 
   <div>
   <label className={labelCls}>Category</label>

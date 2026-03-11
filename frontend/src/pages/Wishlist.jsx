@@ -63,7 +63,7 @@ const Wishlist = () => {
     );
 
     return (
-        <div className="min-h-[calc(100vh-64px)] py-12 px-6 bg-gray-50 dark:bg-[#121212]">
+        <div className="min-h-[calc(100vh-64px)] py-8 sm:py-12 px-4 sm:px-6 bg-gray-50 dark:bg-[#121212]">
             <div className="max-w-7xl mx-auto">
                 <div className="mb-10 animate-in">
                     <h1 className="text-3xl font-bold tracking-tight mb-2 text-gray-900 dark:text-gray-100">Your Wishlist</h1>
@@ -71,7 +71,7 @@ const Wishlist = () => {
                 </div>
 
                 {wishlist.length === 0 ? (
-                    <div className="card p-16 text-center animate-in bg-white dark:bg-[#1C1C1E] border border-gray-200 dark:border-white/10 rounded-2xl shadow-sm" style={{ animationDelay: '100ms' }}>
+                    <div className="card p-8 sm:p-16 text-center animate-in bg-white dark:bg-[#1C1C1E] border border-gray-200 dark:border-white/10 rounded-2xl shadow-sm" style={{ animationDelay: '100ms' }}>
                         <div className="w-16 h-16 bg-gray-100 dark:bg-black rounded-full flex items-center justify-center mx-auto mb-4 text-gray-400 dark:text-gray-600">
                             <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}><path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" /></svg>
                         </div>

@@ -34,7 +34,7 @@ const Footer = () => {
               </h3>
 
               <div className="space-y-2 text-sm flex flex-col">
-                <Link to="/" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors">
+                <Link to="/products" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors">
                   All Products
                 </Link>
 
@@ -50,9 +50,7 @@ const Footer = () => {
 
             {/* Support */}
             <div>
-              <h3 className="text-xs font-semibold uppercase mb-3 text-gray-500 dark:text-gray-400">
-                Support
-              </h3>
+              
 
               <div className="space-y-2 text-sm flex flex-col">
                 <Link to="/contact" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors">

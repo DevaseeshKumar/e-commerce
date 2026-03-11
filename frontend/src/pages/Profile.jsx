@@ -97,9 +97,9 @@ const Profile = () => {
     );
 
     return (
-        <div className="min-h-[calc(100vh-64px)] py-12 px-6 bg-gray-50 dark:bg-[#121212]">
+        <div className="min-h-[calc(100vh-64px)] py-8 sm:py-12 px-4 sm:px-6 bg-gray-50 dark:bg-[#121212]">
             <div className="max-w-3xl mx-auto">
-                <div className="flex items-center justify-between mb-8 animate-in text-gray-900 dark:text-gray-100">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8 animate-in text-gray-900 dark:text-gray-100">
                     <h1 className="text-3xl font-bold tracking-tight">Personal Details</h1>
                     {!editMode && (
                         <button onClick={() => setEditMode(true)} className="px-6 py-2 rounded-xl font-semibold bg-gray-100 hover:bg-gray-200 text-gray-900 dark:bg-[#252528] dark:hover:bg-[#303033] dark:text-gray-100 transition-all border border-gray-200 dark:border-white/10 flex items-center gap-2">
@@ -109,9 +109,9 @@ const Profile = () => {
                     )}
                 </div>
 
-                <div className="card p-8 animate-in bg-white dark:bg-[#1C1C1E] border border-gray-200 dark:border-white/10 rounded-2xl shadow-sm text-gray-900 dark:text-gray-100" style={{ animationDelay: '100ms' }}>
+                <div className="card p-5 sm:p-8 animate-in bg-white dark:bg-[#1C1C1E] border border-gray-200 dark:border-white/10 rounded-2xl shadow-sm text-gray-900 dark:text-gray-100" style={{ animationDelay: '100ms' }}>
                     {/* Avatar Section */}
-                    <div className="flex items-center gap-6 mb-10 pb-10 border-b border-gray-200 dark:border-white/10">
+                    <div className="flex flex-col sm:flex-row items-center sm:items-start gap-5 mb-10 pb-10 border-b border-gray-200 dark:border-white/10 text-center sm:text-left">
                         <div className="relative group">
                             <AvatarDisplay size="large" />
                             {/* Upload Overlay */}
@@ -152,16 +152,16 @@ const Profile = () => {
                     {editMode ? (
                         <form onSubmit={handleUpdate} className="space-y-6">
                             <div className="grid md:grid-cols-2 gap-6">
-                                <div><label className="block text-sm font-medium mb-2">Full Name</label><input type="text" className="w-full px-4 py-3 rounded-xl border border-gray-300 dark:border-white/20 bg-gray-50 dark:bg-black text-gray-900 dark:text-gray-100 outline-none focus:border-blue-600 dark:focus:border-blue-500 transition-colors" value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} /></div>
-                                <div><label className="block text-sm font-medium mb-2">Email Address</label><input type="email" className="w-full px-4 py-3 rounded-xl border border-gray-300 dark:border-white/20 bg-gray-50 dark:bg-black text-gray-900 dark:text-gray-100 outline-none focus:border-blue-600 dark:focus:border-blue-500 transition-colors" value={formData.email} onChange={(e) => setFormData({ ...formData, email: e.target.value })} /></div>
+                                <div><label htmlFor="profile-name" className="block text-sm font-medium mb-2">Full Name</label><input id="profile-name" type="text" className="w-full px-4 py-3 rounded-xl border border-gray-300 dark:border-white/20 bg-gray-50 dark:bg-black text-gray-900 dark:text-gray-100 outline-none focus:border-blue-600 dark:focus:border-blue-500 transition-colors" value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} /></div>
+                                <div><label htmlFor="profile-email" className="block text-sm font-medium mb-2">Email Address</label><input id="profile-email" type="email" className="w-full px-4 py-3 rounded-xl border border-gray-300 dark:border-white/20 bg-gray-50 dark:bg-black text-gray-900 dark:text-gray-100 outline-none focus:border-blue-600 dark:focus:border-blue-500 transition-colors" value={formData.email} onChange={(e) => setFormData({ ...formData, email: e.target.value })} /></div>
                             </div>
 
                             <h3 className="text-lg font-semibold pt-4">Shipping Address</h3>
                             <div className="grid md:grid-cols-2 gap-6">
-                                <div><label className="block text-sm font-medium mb-2">Street Address</label><input type="text" className="w-full px-4 py-3 rounded-xl border border-gray-300 dark:border-white/20 bg-gray-50 dark:bg-black text-gray-900 dark:text-gray-100 outline-none focus:border-blue-600 dark:focus:border-blue-500 transition-colors" value={formData.address.street} onChange={(e) => setFormData({ ...formData, address: { ...formData.address, street: e.target.value } })} /></div>
-                                <div><label className="block text-sm font-medium mb-2">City</label><input type="text" className="w-full px-4 py-3 rounded-xl border border-gray-300 dark:border-white/20 bg-gray-50 dark:bg-black text-gray-900 dark:text-gray-100 outline-none focus:border-blue-600 dark:focus:border-blue-500 transition-colors" value={formData.address.city} onChange={(e) => setFormData({ ...formData, address: { ...formData.address, city: e.target.value } })} /></div>
-                                <div><label className="block text-sm font-medium mb-2">State/Province</label><input type="text" className="w-full px-4 py-3 rounded-xl border border-gray-300 dark:border-white/20 bg-gray-50 dark:bg-black text-gray-900 dark:text-gray-100 outline-none focus:border-blue-600 dark:focus:border-blue-500 transition-colors" value={formData.address.state} onChange={(e) => setFormData({ ...formData, address: { ...formData.address, state: e.target.value } })} /></div>
-                                <div><label className="block text-sm font-medium mb-2">Postal Code</label><input type="text" className="w-full px-4 py-3 rounded-xl border border-gray-300 dark:border-white/20 bg-gray-50 dark:bg-black text-gray-900 dark:text-gray-100 outline-none focus:border-blue-600 dark:focus:border-blue-500 transition-colors" value={formData.address.pincode} onChange={(e) => setFormData({ ...formData, address: { ...formData.address, pincode: e.target.value } })} /></div>
+                                <div><label htmlFor="profile-street" className="block text-sm font-medium mb-2">Street Address</label><input id="profile-street" type="text" className="w-full px-4 py-3 rounded-xl border border-gray-300 dark:border-white/20 bg-gray-50 dark:bg-black text-gray-900 dark:text-gray-100 outline-none focus:border-blue-600 dark:focus:border-blue-500 transition-colors" value={formData.address.street} onChange={(e) => setFormData({ ...formData, address: { ...formData.address, street: e.target.value } })} /></div>
+                                <div><label htmlFor="profile-city" className="block text-sm font-medium mb-2">City</label><input id="profile-city" type="text" className="w-full px-4 py-3 rounded-xl border border-gray-300 dark:border-white/20 bg-gray-50 dark:bg-black text-gray-900 dark:text-gray-100 outline-none focus:border-blue-600 dark:focus:border-blue-500 transition-colors" value={formData.address.city} onChange={(e) => setFormData({ ...formData, address: { ...formData.address, city: e.target.value } })} /></div>
+                                <div><label htmlFor="profile-state" className="block text-sm font-medium mb-2">State/Province</label><input id="profile-state" type="text" className="w-full px-4 py-3 rounded-xl border border-gray-300 dark:border-white/20 bg-gray-50 dark:bg-black text-gray-900 dark:text-gray-100 outline-none focus:border-blue-600 dark:focus:border-blue-500 transition-colors" value={formData.address.state} onChange={(e) => setFormData({ ...formData, address: { ...formData.address, state: e.target.value } })} /></div>
+                                <div><label htmlFor="profile-pincode" className="block text-sm font-medium mb-2">Postal Code</label><input id="profile-pincode" type="text" className="w-full px-4 py-3 rounded-xl border border-gray-300 dark:border-white/20 bg-gray-50 dark:bg-black text-gray-900 dark:text-gray-100 outline-none focus:border-blue-600 dark:focus:border-blue-500 transition-colors" value={formData.address.pincode} onChange={(e) => setFormData({ ...formData, address: { ...formData.address, pincode: e.target.value } })} /></div>
                             </div>
 
                             <div className="flex gap-4 pt-4">

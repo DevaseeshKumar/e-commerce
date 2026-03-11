@@ -1,8 +1,13 @@
 import { useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import toast from "react-hot-toast";
 import API from "../config/api";
 
 const Help = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const returnTo = location.state?.returnTo || null;
+
   const [formData, setFormData] = useState({ name: "", email: "", message: "" });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -22,6 +27,9 @@ const Help = () => {
       if (res.ok) {
         toast.success(data.message || "Message sent successfully!");
         setFormData({ name: "", email: "", message: "" });
+        if (returnTo) {
+          setTimeout(() => navigate(returnTo), 1500);
+        }
       } else {
         toast.error(data.error || "Failed to send message.");
       }
@@ -33,8 +41,19 @@ const Help = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-[#121212] py-20 px-6">
-      <div className="max-w-2xl mx-auto bg-white dark:bg-[#1C1C1E] rounded-3xl p-10 shadow-xl border border-gray-100 dark:border-white/10">
+    <div className="min-h-screen bg-gray-50 dark:bg-[#121212] py-12 sm:py-20 px-4 sm:px-6">
+      <div className="max-w-2xl mx-auto bg-white dark:bg-[#1C1C1E] rounded-3xl p-6 sm:p-10 shadow-xl border border-gray-100 dark:border-white/10">
+        {returnTo && (
+          <button
+            onClick={() => navigate(returnTo)}
+            className="flex items-center gap-2 text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-gray-800 dark:hover:text-white mb-6 transition-colors"
+          >
+            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
+            </svg>
+            Back
+          </button>
+        )}
         <h1 className="text-4xl font-bold mb-4 text-gray-900 dark:text-white text-center">How can we help?</h1>
         <p className="text-gray-600 dark:text-gray-400 text-center mb-10">
           Send us a message and we'll get back to you as soon as possible.

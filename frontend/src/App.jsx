@@ -22,6 +22,9 @@ import ResetPassword from './pages/ResetPassword';
 import Wishlist from './pages/Wishlist';
 import About from './pages/About';
 import Help from './pages/Help';
+import Contact from './pages/Contact';
+import Privacy from './pages/Privacy';
+import Terms from './pages/Terms';
 
 const App = () => {
   return (
@@ -36,6 +39,9 @@ const App = () => {
         <Route path="/products" element={<UserViewProduct />} />
         <Route path="/about" element={<About />} />
         <Route path="/help" element={<Help />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/privacy" element={<Privacy />} />
+        <Route path="/terms" element={<Terms />} />
       </Route>
 
       {/* ── User Routes (UserLayout: UserNavbar + Footer) ── */}

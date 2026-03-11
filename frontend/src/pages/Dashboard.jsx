@@ -9,7 +9,7 @@ const Dashboard = () => {
     ];
 
     return (
-        <div className="bg-gray-50 dark:bg-[#121212] min-h-screen p-8">
+        <div className="bg-gray-50 dark:bg-[#121212] min-h-screen p-4 sm:p-8">
             <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-8">Dashboard</h1>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 {cards.map((card) => (

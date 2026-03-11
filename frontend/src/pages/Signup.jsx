@@ -69,7 +69,7 @@ const Signup = () => {
 
   return (
     <div className="min-h-[calc(100vh-64px)] flex items-center justify-center px-6 py-10 bg-white dark:bg-[#1C1C1E]">
-      <div className="w-full max-w-md rounded-2xl p-10 border border-gray-200 dark:border-white/10 bg-white dark:bg-[#1C1C1E] shadow-[0_4px_24px_rgba(0,0,0,0.04)] dark:shadow-[0_4px_24px_rgba(0,0,0,0.2)]">
+      <div className="w-full max-w-md rounded-2xl p-6 sm:p-10 border border-gray-200 dark:border-white/10 bg-white dark:bg-[#1C1C1E] shadow-[0_4px_24px_rgba(0,0,0,0.04)] dark:shadow-[0_4px_24px_rgba(0,0,0,0.2)]">
 
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold mb-2 text-gray-900 dark:text-gray-100">

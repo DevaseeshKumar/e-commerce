@@ -74,7 +74,7 @@ const AdminOrders = () => {
     );
 
     return (
-        <div className="min-h-[calc(100vh-64px)] py-12 px-6 bg-gray-50 dark:bg-[#121212]">
+        <div className="min-h-[calc(100vh-64px)] py-8 sm:py-12 px-4 sm:px-6 bg-gray-50 dark:bg-[#121212]">
             <div className="max-w-7xl mx-auto">
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-10 animate-in text-gray-900 dark:text-gray-100">
                     <div>

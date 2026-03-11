@@ -52,3 +52,17 @@
   --nav-bg: rgba(28, 28, 30, 0.75);
 }
 
+/* ── Mobile baseline ── */
+html {
+  overflow-x: hidden;
+}
+
+body {
+  overflow-x: hidden;
+  -webkit-text-size-adjust: 100%;
+}
+
+img, video {
+  max-width: 100%;
+  height: auto;
+}

@@ -97,7 +97,7 @@ const AdminProfile = () => {
     );
 
     return (
-        <div className="min-h-[calc(100vh-64px)] py-12 px-6 bg-gray-50 dark:bg-[#121212]">
+        <div className="min-h-[calc(100vh-64px)] py-8 sm:py-12 px-4 sm:px-6 bg-gray-50 dark:bg-[#121212]">
             <div className="max-w-3xl mx-auto">
                 <div className="flex items-center justify-between mb-8 animate-in text-gray-900 dark:text-gray-100">
                     <h1 className="text-3xl font-bold tracking-tight">Personal Details</h1>
@@ -109,9 +109,9 @@ const AdminProfile = () => {
                     )}
                 </div>
 
-                <div className="card p-8 animate-in bg-white dark:bg-[#1C1C1E] border border-gray-200 dark:border-white/10 rounded-2xl shadow-sm text-gray-900 dark:text-gray-100" style={{ animationDelay: '100ms' }}>
+                <div className="card p-5 sm:p-8 animate-in bg-white dark:bg-[#1C1C1E] border border-gray-200 dark:border-white/10 rounded-2xl shadow-sm text-gray-900 dark:text-gray-100" style={{ animationDelay: '100ms' }}>
                     {/* Avatar Section */}
-                    <div className="flex items-center gap-6 mb-10 pb-10 border-b border-gray-200 dark:border-white/10">
+                    <div className="flex flex-col sm:flex-row items-center sm:items-start gap-5 mb-10 pb-10 border-b border-gray-200 dark:border-white/10 text-center sm:text-left">
                         <div className="relative group">
                             <AvatarDisplay size="large" />
                             {/* Upload Overlay */}

@@ -38,7 +38,7 @@ const ForgotPassword = () => {
 
     return (
         <div className="min-h-[calc(100vh-64px)] flex items-center justify-center p-6 bg-gray-50 dark:bg-[#121212]">
-            <div className="bg-white dark:bg-[#1C1C1E] border border-gray-200 dark:border-white/10 rounded-[20px] shadow-sm w-full max-w-md p-10 animate-[fadeInScale_0.25s_ease-out_forwards] text-gray-900 dark:text-gray-100">
+            <div className="bg-white dark:bg-[#1C1C1E] border border-gray-200 dark:border-white/10 rounded-[20px] shadow-sm w-full max-w-md p-6 sm:p-10 animate-[fadeInScale_0.25s_ease-out_forwards] text-gray-900 dark:text-gray-100">
                 <div className="text-center mb-8">
                     <div className="w-16 h-16 bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-500 rounded-full flex items-center justify-center mx-auto mb-4">
                         <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
