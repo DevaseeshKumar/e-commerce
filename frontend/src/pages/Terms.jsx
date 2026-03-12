@@ -1,15 +1,15 @@
 const sections = [
   {
     title: "Acceptance of Terms",
-    content: `By accessing or using ShopEasy, you agree to be bound by these Terms of Service and all applicable laws and regulations. If you do not agree with any of these terms, you are prohibited from using or accessing this site. These terms apply to all users of the site, including browsers, vendors, customers, and contributors of content.`,
+    content: `By accessing or using Zhop, you agree to be bound by these Terms of Service and all applicable laws and regulations. If you do not agree with any of these terms, you are prohibited from using or accessing this site. These terms apply to all users of the site, including browsers, vendors, customers, and contributors of content.`,
   },
   {
     title: "Use of the Platform",
-    content: `You may use ShopEasy only for lawful purposes and in accordance with these Terms. You agree not to use the platform in any way that violates applicable laws, transmits unsolicited or unauthorized advertising, impersonates any person or entity, or interferes with the normal operation of the site. We reserve the right to terminate access to users who violate these terms.`,
+    content: `You may use Zhop only for lawful purposes and in accordance with these Terms. You agree not to use the platform in any way that violates applicable laws, transmits unsolicited or unauthorized advertising, impersonates any person or entity, or interferes with the normal operation of the site. We reserve the right to terminate access to users who violate these terms.`,
   },
   {
     title: "Account Registration",
-    content: `To access certain features, you must register for an account. You agree to provide accurate, current, and complete information and to keep your account credentials secure. You are responsible for all activities that occur under your account. Notify us immediately at support@shopeasy.com if you suspect unauthorized use of your account.`,
+    content: `To access certain features, you must register for an account. You agree to provide accurate, current, and complete information and to keep your account credentials secure. You are responsible for all activities that occur under your account. Notify us immediately at support@zhop.com if you suspect unauthorized use of your account.`,
   },
   {
     title: "Orders and Payments",
@@ -21,11 +21,11 @@ const sections = [
   },
   {
     title: "Intellectual Property",
-    content: `All content on ShopEasy — including text, graphics, logos, images, and software — is the property of ShopEasy or its content suppliers and is protected by intellectual property laws. You may not reproduce, distribute, or create derivative works without explicit written permission.`,
+    content: `All content on Zhop — including text, graphics, logos, images, and software — is the property of Zhop or its content suppliers and is protected by intellectual property laws. You may not reproduce, distribute, or create derivative works without explicit written permission.`,
   },
   {
     title: "Limitation of Liability",
-    content: `To the fullest extent permitted by law, ShopEasy shall not be liable for any indirect, incidental, special, or consequential damages arising out of your use of the platform. Our total liability for any claims arising from your use of the service shall not exceed the amount you paid for the specific product or service in question.`,
+    content: `To the fullest extent permitted by law, Zhop shall not be liable for any indirect, incidental, special, or consequential damages arising out of your use of the platform. Our total liability for any claims arising from your use of the service shall not exceed the amount you paid for the specific product or service in question.`,
   },
   {
     title: "Changes to Terms",
@@ -43,7 +43,7 @@ const Terms = () => {
           <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-3">Terms of Service</h1>
           <p className="text-sm text-gray-500 dark:text-gray-400">Last updated: January 1, 2025</p>
           <p className="mt-4 text-gray-600 dark:text-gray-300 text-sm leading-relaxed">
-            Please read these Terms of Service carefully before using ShopEasy. These terms govern your access to and use of our platform.
+            Please read these Terms of Service carefully before using Zhop. These terms govern your access to and use of our platform.
           </p>
         </div>
 
@@ -65,8 +65,8 @@ const Terms = () => {
         {/* Footer note */}
         <div className="mt-10 text-center text-xs text-gray-400 dark:text-gray-500">
           Questions about these terms? Email us at{" "}
-          <a href="mailto:legal@shopeasy.com" className="text-blue-600 dark:text-blue-400 hover:underline">
-            legal@shopeasy.com
+          <a href="mailto:legal@zhop.com" className="text-blue-600 dark:text-blue-400 hover:underline">
+            legal@zhop.com
           </a>
         </div>
 

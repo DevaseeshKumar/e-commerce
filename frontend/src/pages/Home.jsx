@@ -35,7 +35,7 @@ const Home = () => {
             transition={{ duration: 0.6 }}
             className="text-sm uppercase tracking-widest mb-4 text-gray-500 dark:text-gray-400"
           >
-            Welcome to ShopEasy
+            Welcome to Zhop
           </motion.p>
 
           <motion.h1

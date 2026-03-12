@@ -17,7 +17,7 @@ const userRegistration = async (req, res) => {
         if (existingUser) return res.status(409).json({ error: "Email already registered" });
 
         const hashedPassword = await bcrypt.hash(password, 10);
-        const newUser = new User({ name, email, password: hashedPassword, role: role || "user" });
+        const newUser = new User({ name, email, password: hashedPassword, role: "user" });
         const saved = await newUser.save();
 
         // Send welcome email (non-blocking)
@@ -439,7 +439,9 @@ const addToWishlist = async (req, res) => {
 const removeFromWishlist = async (req, res) => {
     try {
         const { productId } = req.body;
+        if (!productId) return res.status(400).json({ error: "Product ID is required" });
         const user = await User.findById(req.userId);
+        if (!user) return res.status(404).json({ error: "User not found" });
         user.wishlist = user.wishlist.filter(id => id.toString() !== productId);
         await user.save();
         res.json({ message: "Removed from wishlist" });

@@ -9,7 +9,7 @@ const sections = [
   },
   {
     title: "Information Sharing",
-    content: `We may share your information with trusted third-party service providers who assist us in operating our platform — such as payment processors and shipping partners — under strict confidentiality agreements. We may also disclose information if required by law or to protect the rights and safety of ShopEasy and its users.`,
+    content: `We may share your information with trusted third-party service providers who assist us in operating our platform — such as payment processors and shipping partners — under strict confidentiality agreements. We may also disclose information if required by law or to protect the rights and safety of Zhop and its users.`,
   },
   {
     title: "Data Security",
@@ -21,7 +21,7 @@ const sections = [
   },
   {
     title: "Your Rights",
-    content: `You have the right to access, update, or delete your personal information at any time through your account settings. You may also opt out of promotional emails by clicking "unsubscribe" in any marketing email. For any privacy-related requests, contact us at privacy@shopeasy.com.`,
+    content: `You have the right to access, update, or delete your personal information at any time through your account settings. You may also opt out of promotional emails by clicking "unsubscribe" in any marketing email. For any privacy-related requests, contact us at privacy@zhop.com.`,
   },
   {
     title: "Changes to This Policy",
@@ -39,7 +39,7 @@ const Privacy = () => {
           <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-3">Privacy Policy</h1>
           <p className="text-sm text-gray-500 dark:text-gray-400">Effective date: January 1, 2025</p>
           <p className="mt-4 text-gray-600 dark:text-gray-300 text-sm leading-relaxed">
-            At ShopEasy, we take your privacy seriously. This policy explains how we collect, use, and protect your personal information when you use our platform.
+            At Zhop, we take your privacy seriously. This policy explains how we collect, use, and protect your personal information when you use our platform.
           </p>
         </div>
 
@@ -61,8 +61,8 @@ const Privacy = () => {
         {/* Footer note */}
         <div className="mt-10 text-center text-xs text-gray-400 dark:text-gray-500">
           Questions about this policy? Email us at{" "}
-          <a href="mailto:privacy@shopeasy.com" className="text-blue-600 dark:text-blue-400 hover:underline">
-            privacy@shopeasy.com
+          <a href="mailto:privacy@zhop.com" className="text-blue-600 dark:text-blue-400 hover:underline">
+            privacy@zhop.com
           </a>
         </div>
 

@@ -35,11 +35,13 @@ app.post('/webhook', express.raw({ type: 'application/json' }), async (req, res)
 
   let event;
   try {
-    // Warning: This requires STRIPE_WEBHOOK_SECRET in .env. If not present, we skip validation for demo purposes.
-    if (process.env.STRIPE_WEBHOOK_SECRET) {
-      event = stripe.webhooks.constructEvent(req.body, sig, process.env.STRIPE_WEBHOOK_SECRET);
+    if (!process.env.STRIPE_WEBHOOK_SECRET) {
+      if (process.env.NODE_ENV === 'production') {
+        return res.status(500).send('Webhook secret not configured');
+      }
+      event = JSON.parse(req.body); // Dev-only fallback
     } else {
-      event = JSON.parse(req.body); // Fallback if no webhook secret is set in dev
+      event = stripe.webhooks.constructEvent(req.body, sig, process.env.STRIPE_WEBHOOK_SECRET);
     }
   } catch (err) {
     return res.status(400).send(`Webhook Error: ${err.message}`);
@@ -108,6 +110,10 @@ app.use(session({
 
 app.use("/products", Product);
 app.use("/users", Users);
+
+app.use((req, res) => {
+  res.status(404).json({ error: "Route not found" });
+});
 
 app.use((err, req, res, next) => {
   console.error(err.stack);

@@ -27,7 +27,7 @@ router.put("/update-profile", authMiddleware, userUpdateProfile);
 router.post("/upload-profile-picture", authMiddleware, uploadAvatar.single('profilePicture'), uploadProfilePicture);
 
 // Help & Support
-router.post("/help/send", submitHelpMessage);
+router.post("/help/send", authLimiter, submitHelpMessage);
 
 // Cart
 router.post("/add-to-cart", authMiddleware, addToCart);

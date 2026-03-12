@@ -25,6 +25,7 @@ import Help from './pages/Help';
 import Contact from './pages/Contact';
 import Privacy from './pages/Privacy';
 import Terms from './pages/Terms';
+import NotFound from './pages/NotFound';
 
 const App = () => {
   return (
@@ -66,6 +67,9 @@ const App = () => {
         <Route path="/admin/view-orders" element={<AdminOrders />} />
         <Route path="/admin/profile" element={<AdminProfile />} />
       </Route>
+
+      {/* ── 404 Catch-All ── */}
+      <Route path="*" element={<NotFound />} />
     </Routes>
   );
 };

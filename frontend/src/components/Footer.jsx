@@ -14,7 +14,7 @@ const Footer = () => {
           <div className="max-w-sm">
             <div className="flex items-center gap-3 mb-3">
               <span className="text-lg font-semibold text-gray-900 dark:text-gray-100">
-                ShopEasy
+                Zhop
               </span>
             </div>
 
@@ -75,7 +75,7 @@ const Footer = () => {
         <div className="mt-10 pt-6 flex flex-col sm:flex-row justify-between items-center gap-3 border-t border-gray-200 dark:border-white/10">
 
           <p className="text-xs text-gray-500 dark:text-gray-400">
-            © {year} ShopEasy. All rights reserved.
+            © {year} Zhop. All rights reserved.
           </p>
 
           <div className="flex items-center gap-4 text-sm">
