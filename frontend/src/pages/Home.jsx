@@ -17,7 +17,7 @@ const Home = () => {
   const desktopScale = useTransform(scrollYProgress, [0, 1], [0.85, 1])
 
   /* Mobile: watch drops DOWN from above */
-  const mobileY = useTransform(scrollYProgress, [0, 1], [-20, 950])
+  const mobileY = useTransform(scrollYProgress, [0, 1], [-10, 950])
   const mobileRotate = useTransform(scrollYProgress, [1, 0], [0, 15])
   const mobileScale = useTransform(scrollYProgress, [0, 1], [0.9, 1])
 
