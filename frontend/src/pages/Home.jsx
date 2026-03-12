@@ -17,7 +17,7 @@ const Home = () => {
   const desktopScale = useTransform(scrollYProgress, [0, 1], [0.85, 1])
 
   /* Mobile: watch drops DOWN from above */
-  const mobileY = useTransform(scrollYProgress, [0, 1], [-10, 950])
+  const mobileY = useTransform(scrollYProgress, [0, 1], [-60, 950])
   const mobileRotate = useTransform(scrollYProgress, [1, 0], [0, 15])
   const mobileScale = useTransform(scrollYProgress, [0, 1], [0.9, 1])
 
@@ -61,7 +61,7 @@ const Home = () => {
 
 
       {/* PRODUCT STORY */}
-      <section ref={ref} className="relative min-h-[140vh] md:min-h-[60vh]">
+      <section ref={ref} className="relative min-h-[190vh] md:min-h-[60vh]">
 
         {/* MOBILE: Stacked story info */}
         <div className="md:hidden px-6 py-8 flex flex-col gap-6 text-center">
@@ -166,7 +166,7 @@ const Home = () => {
 
 
       {/* PRODUCTS */}
-      <section className="py-8 px-6 relative z-10 -mt-[40vh] md:mt-0">
+      <section className="py-8 px-6 relative z-10 -mt-[90vh] md:mt-0">
 
         <h2 className="text-3xl sm:text-4xl font-bold text-center mb-12 text-gray-900 dark:text-gray-100">
           Featured Products
