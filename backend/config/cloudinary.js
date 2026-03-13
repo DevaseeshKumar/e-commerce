@@ -13,7 +13,7 @@ const storage = new CloudinaryStorage({
     params: {
         folder: 'shopeasy-products',
         allowed_formats: ['jpg', 'jpeg', 'png', 'webp'],
-        transformation: [{ width: 800, height: 800, crop: 'limit', quality: 'auto' }]
+        transformation: [{ width: 600, height: 600, crop: 'fill', gravity: 'auto', quality: 'auto' }]
     }
 });
 

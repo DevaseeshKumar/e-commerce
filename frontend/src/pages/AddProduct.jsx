@@ -2,13 +2,16 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import API from "../config/api";
+import { injectCustomFonts, FONT_DISPLAY, FONT_BODY } from "../utils/fonts";
+
+injectCustomFonts();
 
 const AddProduct = () => {
 
   const navigate = useNavigate();
 
   const [loading,setLoading] = useState(false);
-  const [imagePreview,setImagePreview] = useState(null);
+  const [imagePreviews,setImagePreviews] = useState([]);
 
   const [product,setProduct] = useState({
     name:"",
@@ -18,7 +21,7 @@ const AddProduct = () => {
     stock:""
   });
 
-  const [imageFile,setImageFile] = useState(null);
+  const [imageFiles,setImageFiles] = useState([]);
 
   const categories = [
     "electronics",
@@ -36,22 +39,37 @@ const AddProduct = () => {
 
   const handleImageChange = (e)=>{
 
-    const file = e.target.files[0];
+    const files = Array.from(e.target.files);
 
-    if(file){
+    if(files.length > 0){
 
-      if(file.size > 5*1024*1024){
-        return toast.error("Image must be under 5MB");
-      }
+      const validFiles = [];
+      const previews = [];
 
-      setImageFile(file);
+      files.forEach(file => {
+        if(file.size > 5*1024*1024){
+          toast.error(`${file.name} is over 5MB`);
+          return;
+        }
+        validFiles.push(file);
+        
+        const reader = new FileReader();
+        reader.onloadend = ()=> {
+          previews.push(reader.result);
+          if(previews.length === validFiles.length){
+            setImagePreviews(prev => [...prev, ...previews]);
+          }
+        };
+        reader.readAsDataURL(file);
+      });
 
-      const reader = new FileReader();
-
-      reader.onloadend = ()=> setImagePreview(reader.result);
-
-      reader.readAsDataURL(file);
+      setImageFiles(prev => [...prev, ...validFiles]);
     }
+  };
+
+  const removeImage = (index) => {
+    setImagePreviews(prev => prev.filter((_, i) => i !== index));
+    setImageFiles(prev => prev.filter((_, i) => i !== index));
   };
 
   const handleSubmit = async(e)=>{
@@ -60,6 +78,10 @@ const AddProduct = () => {
 
     if(!product.name || !product.price || !product.description || !product.stock){
       return toast.error("Please fill all required fields");
+    }
+
+    if(imageFiles.length === 0){
+      return toast.error("Please add at least one product image");
     }
 
     setLoading(true);
@@ -72,9 +94,9 @@ const AddProduct = () => {
       formData.append(key,product[key]);
     });
 
-    if(imageFile){
-      formData.append("image",imageFile);
-    }
+    imageFiles.forEach(file => {
+      formData.append("images", file);
+    });
 
     try{
 
@@ -249,22 +271,31 @@ const AddProduct = () => {
   <div className={`${cardCls} p-8`}>
 
   <h3 className="text-lg font-bold mb-6 text-gray-900 dark:text-gray-100">
-  Product Image
+  Product Images
   </h3>
 
   <div className="relative aspect-square rounded-xl border-2 border-dashed border-gray-300 dark:border-white/20 bg-gray-50 dark:bg-black flex items-center justify-center overflow-hidden">
 
-  {imagePreview ?(
+  {imagePreviews.length > 0 ?(
 
-  <img
-  src={imagePreview}
-  alt="preview"
-  className="w-full h-full object-cover"
-  />
+  <div className="w-full h-full grid grid-cols-2 gap-2 p-3 overflow-auto">
+    {imagePreviews.map((preview, idx) => (
+      <div key={idx} className="relative group rounded-lg overflow-hidden">
+        <img src={preview} alt={`preview-${idx}`} className="w-full h-full object-cover" />
+        <button
+          type="button"
+          onClick={() => removeImage(idx)}
+          className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 flex items-center justify-center transition"
+        >
+          <span className="text-white text-2xl">×</span>
+        </button>
+      </div>
+    ))}
+  </div>
 
   ):(
   <p className="text-sm text-gray-500 dark:text-gray-400">
-  Upload Image
+  Upload Images (Multiple)
   </p>
   )}
 
@@ -273,9 +304,14 @@ const AddProduct = () => {
   accept="image/*"
   onChange={handleImageChange}
   className="absolute inset-0 opacity-0 cursor-pointer"
+  multiple
   />
 
   </div>
+
+  <p className="text-xs mt-2 text-gray-500 dark:text-gray-400">
+  {imagePreviews.length > 0 ? `${imagePreviews.length} image(s) selected • Click an image to remove` : 'Drag or click to add multiple images (Max 10)'}
+  </p>
 
   </div>
 

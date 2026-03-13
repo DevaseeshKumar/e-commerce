@@ -24,11 +24,13 @@ const addProduct = async (req, res) => {
         if (price === undefined || Number(price) <= 0) return res.status(400).json({ error: "Price must be greater than 0" });
         if (!description || !description.trim()) return res.status(400).json({ error: "Description is required" });
 
+        const imageUrls = req.files ? req.files.map(file => file.path) : [];
+
         const newProduct = new Product({
             name: name.trim(),
             price: Number(price),
             description: description.trim(),
-            image: req.file ? req.file.path : '',
+            images: imageUrls,
             category: category || 'other',
             stock: Number(stock) || 0,
             seller: req.userId
@@ -49,7 +51,10 @@ const updateProduct = async (req, res) => {
             name: name.trim(), price: Number(price), description: description.trim(),
             category: category || 'other', stock: Number(stock) || 0
         };
-        if (req.file) updateData.image = req.file.path;
+        
+        if (req.files && req.files.length > 0) {
+            updateData.images = req.files.map(file => file.path);
+        }
 
         const updated = await Product.findByIdAndUpdate(req.params.id, updateData, { returnDocument: 'after' });
         if (!updated) return res.status(404).json({ error: "Product not found" });

@@ -1,4 +1,7 @@
 import { Navigate } from "react-router-dom";
+import { injectCustomFonts, FONT_DISPLAY, FONT_BODY } from "../utils/fonts";
+
+injectCustomFonts();
 
 const ProtectedRoute = ({ children, allowedRoles }) => {
     const token = localStorage.getItem("token");

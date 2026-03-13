@@ -1,3 +1,7 @@
+import { injectCustomFonts, FONT_DISPLAY, FONT_BODY } from "../utils/fonts";
+
+injectCustomFonts();
+
 const ConfirmModal = ({ isOpen, title, message, onConfirm, onCancel, confirmText = "Confirm", cancelText = "Cancel", danger = false }) => {
     if (!isOpen) return null;
 

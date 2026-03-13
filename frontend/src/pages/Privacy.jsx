@@ -1,3 +1,7 @@
+import { injectCustomFonts, FONT_DISPLAY, FONT_BODY } from "../utils/fonts";
+
+injectCustomFonts();
+
 const sections = [
   {
     title: "Information We Collect",

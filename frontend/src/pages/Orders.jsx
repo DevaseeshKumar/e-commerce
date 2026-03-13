@@ -1,10 +1,14 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import ConfirmModal from "../components/ConfirmModal";
+import { injectCustomFonts, FONT_DISPLAY, FONT_BODY } from "../utils/fonts";
+
+injectCustomFonts();
 
 import API from '../config/api';
 const Orders = () => {
+    const navigate = useNavigate();
     const [orders, setOrders] = useState([]);
     const [loading, setLoading] = useState(true);
     const [cancelModal, setCancelModal] = useState({ isOpen: false, orderId: null });
@@ -34,6 +38,11 @@ const Orders = () => {
     };
 
     useEffect(() => {
+        if (!token) {
+            toast.error("Please login to view your orders");
+            navigate("/login");
+            return;
+        }
         fetchOrders();
 
         const urlParams = new URLSearchParams(window.location.search);
@@ -70,7 +79,12 @@ const Orders = () => {
             const data = await res.json();
 
             if (res.ok) {
-                toast.success("Order cancelled. Stock has been restored.");
+                const order = data.order;
+                if (order.paymentMethod === "online" && order.paymentStatus === "refunded") {
+                    toast.success(`Order cancelled and ₹${order.totalPrice.toFixed(2)} has been refunded to your account. Refund may take 3-5 business days.`);
+                } else {
+                    toast.success("Order cancelled. Stock has been restored.");
+                }
                 setOrders(orders.map(o => o._id === cancelModal.orderId ? data.order : o));
             } else toast.error(data.error);
         } catch (err) { toast.error("Failed to cancel order"); }
@@ -277,8 +291,8 @@ const Orders = () => {
                                             return (
                                                 <div key={idx} className="flex flex-wrap gap-3 p-3 sm:p-4 rounded-xl border border-transparent hover:bg-gray-50 dark:hover:bg-[#252528] hover:border-gray-200 dark:hover:border-white/10 transition-colors">
                                                     <div className="w-16 h-16 sm:w-20 sm:h-20 bg-gray-100 dark:bg-black rounded-xl overflow-hidden border border-gray-200 dark:border-white/10 shrink-0 flex items-center justify-center cursor-pointer" onClick={() => handleViewClick(item.product?._id)}>
-                                                        {item.product?.image ? (
-                                                            <img src={item.product.image} alt={item.product.name} className="w-full h-full object-cover" />
+                                                        {item.product?.images?.[0] ? (
+                                                            <img src={item.product.images[0]} alt={item.product.name} className="w-full h-full object-cover" />
                                                         ) : (
                                                             <svg className="w-8 h-8 text-gray-400 dark:text-gray-600 opacity-50" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
                                                                 <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m3.75 9v6m3-3H9m1.5-12H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
@@ -335,7 +349,13 @@ const Orders = () => {
             <ConfirmModal
                 isOpen={cancelModal.isOpen}
                 title="Cancel Order"
-                message="Are you sure you want to cancel this order? This action cannot be undone."
+                message={(() => {
+                    const order = orders.find(o => o._id === cancelModal.orderId);
+                    if (order && order.paymentMethod === "online") {
+                        return `Are you sure you want to cancel this order? The amount ₹${order.totalPrice.toFixed(2)} will be refunded to your account within 3-5 business days.`;
+                    }
+                    return "Are you sure you want to cancel this order? This action cannot be undone.";
+                })()}
                 confirmText="Cancel Order"
                 danger={true}
                 onConfirm={handleCancel}
@@ -436,8 +456,8 @@ const Orders = () => {
                                 <div className="flex flex-col md:flex-row gap-8">
                                     <div className="w-full md:w-1/2 shrink-0">
                                         <div className="aspect-square rounded-2xl overflow-hidden bg-gray-100 dark:bg-black border border-gray-200 dark:border-white/10 relative">
-                                            {detailsModal.product.image ? (
-                                                <img src={detailsModal.product.image} alt={detailsModal.product.name} className="w-full h-full object-cover" />
+                                            {detailsModal.product.images?.[0] ? (
+                                                <img src={detailsModal.product.images[0]} alt={detailsModal.product.name} className="w-full h-full object-cover" />
                                             ) : (
                                                 <div className="w-full h-full flex flex-col items-center justify-center text-gray-400 dark:text-gray-600">
                                                     <svg className="w-16 h-16 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1}><path strokeLinecap="round" strokeLinejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" /></svg>

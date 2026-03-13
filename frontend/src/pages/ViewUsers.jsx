@@ -1,8 +1,11 @@
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import ConfirmModal from "../components/ConfirmModal";
+import { injectCustomFonts, FONT_DISPLAY, FONT_BODY } from "../utils/fonts";
 
 import API from '../config/api';
+
+injectCustomFonts();
 const ViewUsers = () => {
     const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -280,7 +283,7 @@ const ViewUsers = () => {
                                                     <div key={idx} className="flex items-center gap-3">
                                                         <div className="w-10 h-10 rounded-lg bg-gray-50 dark:bg-black border border-gray-200 dark:border-white/10 overflow-hidden shrink-0">
                                                             {item.product?.image
-                                                                ? <img src={item.product.image} alt="" className="w-full h-full object-cover" />
+                                                                ? <img src={item.product.images?.[0]} alt="" className="w-full h-full object-cover" />
                                                                 : <div className="w-full h-full bg-gradient-to-br from-gray-50 to-gray-200 dark:from-black dark:to-white/10" />}
                                                         </div>
                                                         <div className="flex-1 min-w-0">

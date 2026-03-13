@@ -1,4 +1,7 @@
 import { Link } from "react-router-dom";
+import { injectCustomFonts, FONT_DISPLAY, FONT_BODY } from "../utils/fonts";
+
+injectCustomFonts();
 
 const Footer = () => {
   const year = new Date().getFullYear();

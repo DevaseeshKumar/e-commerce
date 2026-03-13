@@ -2,6 +2,9 @@
 import { Link, useLocation } from "react-router-dom";
 import { useState } from "react";
 import { useTheme } from "../context/ThemeContext";
+import { injectCustomFonts, FONT_DISPLAY, FONT_BODY } from "../utils/fonts";
+
+injectCustomFonts();
 
 const Navbar = () => {
   const { theme, toggleTheme } = useTheme();

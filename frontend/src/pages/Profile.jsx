@@ -1,8 +1,14 @@
 import { useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
+import { injectCustomFonts, FONT_DISPLAY, FONT_BODY } from "../utils/fonts";
 
 import API from '../config/api';
+
+injectCustomFonts();
+
 const Profile = () => {
+    const navigate = useNavigate();
     const [user, setUser] = useState(null);
     const [editMode, setEditMode] = useState(false);
     const [formData, setFormData] = useState({
@@ -13,7 +19,14 @@ const Profile = () => {
     const fileInputRef = useRef(null);
     const token = localStorage.getItem("token");
 
-    useEffect(() => { fetchProfile(); }, []);
+    useEffect(() => {
+        if (!token) {
+            toast.error("Please login to view your profile");
+            navigate("/login");
+            return;
+        }
+        fetchProfile();
+    }, []);
 
     const fetchProfile = async () => {
         try {

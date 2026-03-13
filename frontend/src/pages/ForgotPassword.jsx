@@ -1,8 +1,11 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import toast from "react-hot-toast";
+import { injectCustomFonts, FONT_DISPLAY, FONT_BODY } from "../utils/fonts";
 
 import API from '../config/api';
+
+injectCustomFonts();
 const ForgotPassword = () => {
     const [email, setEmail] = useState("");
     const [loading, setLoading] = useState(false);

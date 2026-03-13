@@ -2,6 +2,9 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import API from "../config/api";
+import { injectCustomFonts, FONT_DISPLAY, FONT_BODY } from "../utils/fonts";
+
+injectCustomFonts();
 
 const UserViewProduct = () => {
   const navigate = useNavigate();
@@ -12,6 +15,7 @@ const UserViewProduct = () => {
   const [addingToCart, setAddingToCart] = useState({});
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [loadingDetails, setLoadingDetails] = useState(false);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   const token = localStorage.getItem("token");
 
@@ -115,6 +119,7 @@ const UserViewProduct = () => {
     );
 
   const openProductModal = async (product) => {
+    setCurrentImageIndex(0);
     setSelectedProduct(product);
     setLoadingDetails(true);
     try {
@@ -129,7 +134,22 @@ const UserViewProduct = () => {
     }
   };
 
-  const closeModal = () => setSelectedProduct(null);
+  const previousImage = () => {
+    if (selectedProduct?.images && selectedProduct.images.length > 0) {
+      setCurrentImageIndex((prev) => (prev === 0 ? selectedProduct.images.length - 1 : prev - 1));
+    }
+  };
+
+  const nextImage = () => {
+    if (selectedProduct?.images && selectedProduct.images.length > 0) {
+      setCurrentImageIndex((prev) => (prev === selectedProduct.images.length - 1 ? 0 : prev + 1));
+    }
+  };
+
+  const closeModal = () => {
+    setCurrentImageIndex(0);
+    setSelectedProduct(null);
+  };
 
   return (
     <div className="min-h-screen px-4 sm:px-6 py-8 sm:py-10 bg-gray-50 dark:bg-[#121212]">
@@ -210,9 +230,9 @@ const UserViewProduct = () => {
                   onKeyDown={(e) => e.key === "Enter" && openProductModal(p)}
                 >
 
-                  {p.image ? (
+                  {p.images && p.images.length > 0 ? (
                     <img
-                      src={p.image}
+                      src={p.images[0]}
                       alt={p.name}
                       className="w-full h-full object-cover group-hover:scale-110 transition duration-500"
                     />
@@ -303,19 +323,66 @@ const UserViewProduct = () => {
           </button>
 
           {/* Image Section */}
-          <div className="w-full md:w-1/2 h-64 md:h-full bg-gray-100 dark:bg-black relative shrink-0">
-            {selectedProduct.image ? (
-              <img src={selectedProduct.image} alt={selectedProduct.name} className="w-full h-full object-cover" />
-            ) : (
-              <div className="flex items-center justify-center h-full text-gray-400">No Image</div>
-            )}
+          <div className="w-full md:w-1/2 h-64 md:h-full bg-gray-100 dark:bg-black relative shrink-0 flex flex-col">
+            {/* Main Image */}
+            <div className="flex-1 relative overflow-hidden rounded-lg md:rounded-none">
+              {selectedProduct.images && selectedProduct.images.length > 0 ? (
+                <>
+                  <img src={selectedProduct.images[currentImageIndex]} alt={selectedProduct.name} className="w-full h-full object-cover" />
+                  
+                  {/* Navigation Buttons */}
+                  {selectedProduct.images.length > 1 && (
+                    <>
+                      <button
+                        onClick={previousImage}
+                        className="absolute left-2 top-1/2 -translate-y-1/2 w-10 h-10 bg-black/50 hover:bg-black/70 text-white rounded-full flex items-center justify-center transition"
+                      >
+                        ❮
+                      </button>
+                      <button
+                        onClick={nextImage}
+                        className="absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 bg-black/50 hover:bg-black/70 text-white rounded-full flex items-center justify-center transition"
+                      >
+                        ❯
+                      </button>
+                      
+                      {/* Image Counter */}
+                      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/70 text-white px-3 py-1 rounded-full text-sm font-medium">
+                        {currentImageIndex + 1} / {selectedProduct.images.length}
+                      </div>
+                    </>
+                  )}
+                </>
+              ) : (
+                <div className="flex items-center justify-center h-full text-gray-400">No Image</div>
+              )}
+              
+              <button
+                onClick={() => addToWishlist(selectedProduct._id)}
+                className="hidden md:flex absolute top-6 right-6 w-12 h-12 rounded-full bg-white/90 dark:bg-black/80 backdrop-blur items-center justify-center shadow hover:scale-110 transition text-xl"
+              >
+                ❤️
+              </button>
+            </div>
             
-            <button
-              onClick={() => addToWishlist(selectedProduct._id)}
-              className="hidden md:flex absolute top-6 right-6 w-12 h-12 rounded-full bg-white/90 dark:bg-black/80 backdrop-blur items-center justify-center shadow hover:scale-110 transition text-xl"
-            >
-              ❤️
-            </button>
+            {/* Thumbnail Gallery */}
+            {selectedProduct.images && selectedProduct.images.length > 1 && (
+              <div className="hidden md:flex gap-2 p-4 bg-gray-50 dark:bg-gray-900 overflow-x-auto">
+                {selectedProduct.images.map((image, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setCurrentImageIndex(index)}
+                    className={`w-16 h-16 shrink-0 rounded-lg overflow-hidden border-2 transition ${
+                      currentImageIndex === index
+                        ? 'border-blue-500'
+                        : 'border-gray-300 dark:border-gray-700 hover:border-gray-400'
+                    }`}
+                  >
+                    <img src={image} alt={`${selectedProduct.name} ${index + 1}`} className="w-full h-full object-cover" />
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
 
           {/* Details Section */}

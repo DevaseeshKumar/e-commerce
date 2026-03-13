@@ -1,7 +1,11 @@
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import { injectCustomFonts, FONT_DISPLAY, FONT_BODY } from "../utils/fonts";
 
 import API from '../config/api';
+
+injectCustomFonts();
+
 const AdminOrders = () => {
     const [orders, setOrders] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -194,8 +198,8 @@ const AdminOrders = () => {
                                         {order.items.filter(item => item.product).map((item, idx) => (
                                             <div key={idx} className="flex items-center gap-4 bg-gray-50 dark:bg-[#252528] p-3 rounded-lg border border-gray-200 dark:border-white/10 w-full sm:w-72">
                                                 <div className="w-12 h-12 bg-white dark:bg-black rounded-md overflow-hidden border border-gray-200 dark:border-white/10 shrink-0">
-                                                    {item.product?.image ? (
-                                                        <img src={item.product.image} alt="" className="w-full h-full object-cover" />
+                                                    {item.product?.images?.[0] ? (
+                                                        <img src={item.product.images[0]} alt="" className="w-full h-full object-cover" />
                                                     ) : (
                                                         <div className="w-full h-full bg-gradient-to-br from-gray-50 to-gray-200 dark:from-[#252528] dark:to-white/10"></div>
                                                     )}

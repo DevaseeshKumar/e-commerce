@@ -9,8 +9,8 @@ const router = express.Router();
 router.get("/", allProducts);
 router.get("/search", searchProducts);
 router.get("/:id", getProductById);
-router.post("/add-product", authMiddleware, roleMiddleware(["admin"]), upload.single('image'), addProduct);
-router.put("/update-product/:id", authMiddleware, roleMiddleware(["admin"]), upload.single('image'), updateProduct);
+router.post("/add-product", authMiddleware, roleMiddleware(["admin"]), upload.array('images', 10), addProduct);
+router.put("/update-product/:id", authMiddleware, roleMiddleware(["admin"]), upload.array('images', 10), updateProduct);
 router.delete("/delete-product/:id", authMiddleware, roleMiddleware(["admin"]), deleteProduct);
 router.post("/:id/review", authMiddleware, addReview);
 

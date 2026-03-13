@@ -10,7 +10,7 @@ const productSchema = new mongoose.Schema({
   name: { type: String, required: true },
   price: { type: Number, required: true },
   description: { type: String, required: true },
-  image: { type: String, default: '' },
+  images: [{ type: String, default: '' }],
   category: { type: String, enum: ['electronics', 'clothing', 'accessories', 'home', 'sports', 'books', 'other'], default: 'other' },
   stock: { type: Number, default: 0, min: 0 },
   reviews: [reviewSchema],

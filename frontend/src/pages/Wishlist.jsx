@@ -1,9 +1,13 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import { injectCustomFonts, FONT_DISPLAY, FONT_BODY } from "../utils/fonts";
 
 import API from '../config/api';
+
+injectCustomFonts();
 const Wishlist = () => {
+    const navigate = useNavigate();
     const [wishlist, setWishlist] = useState([]);
     const [loading, setLoading] = useState(true);
     const token = localStorage.getItem("token");
@@ -21,6 +25,11 @@ const Wishlist = () => {
     };
 
     useEffect(() => {
+        if (!token) {
+            toast.error("Please login to view your wishlist");
+            navigate("/login");
+            return;
+        }
         fetchWishlist();
     }, []);
 
@@ -39,6 +48,10 @@ const Wishlist = () => {
     };
 
     const addToCart = async (productId, currentStock) => {
+        if (!token) {
+            toast.error("Please login to add items to your cart");
+            return navigate("/login");
+        }
         if (currentStock < 1) return toast.error("Product is out of stock");
 
         try {
@@ -84,8 +97,8 @@ const Wishlist = () => {
                         {wishlist.map((p, i) => (
                             <div key={p._id} className="card group overflow-hidden flex flex-col animate-in bg-white dark:bg-[#1C1C1E] border border-gray-200 dark:border-white/10 rounded-2xl shadow-sm hover:shadow-md transition-shadow text-gray-900 dark:text-gray-100" style={{ animationDelay: `${(i % 10) * 50}ms` }}>
                                 <div className="relative h-64 bg-gray-50 dark:bg-black flex items-center justify-center overflow-hidden border-b border-gray-200 dark:border-white/10">
-                                    {p.image ? (
-                                        <img src={p.image} alt={p.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                                    {p.images && p.images.length > 0 ? (
+                                        <img src={p.images[0]} alt={p.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                                     ) : (
                                         <div className="absolute inset-0 flex flex-col items-center justify-center text-gray-400 dark:text-gray-600">
                                             <svg className="w-16 h-16 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1}><path strokeLinecap="round" strokeLinejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" /></svg>

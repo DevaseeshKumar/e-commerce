@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300;1,9..40,400&display=swap');
 @custom-variant dark (&:where(.dark, .dark *));
 
 /* ── CSS Design Tokens ── */
@@ -60,6 +61,12 @@ html {
 body {
   overflow-x: hidden;
   -webkit-text-size-adjust: 100%;
+  font-family: 'DM Sans', sans-serif;
+}
+
+/* ── Headings & Display use Syne ── */
+h1, h2, h3, h4, h5, h6, strong, .font-bold {
+  font-family: 'Syne', sans-serif;
 }
 
 img, video {

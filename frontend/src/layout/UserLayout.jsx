@@ -3,6 +3,9 @@ import { Outlet } from "react-router-dom";
 import UserNavbar from "../components/UserNavbar";
 import Footer from "../components/Footer";
 import FloatingHelp from "../components/FloatingHelp";
+import { injectCustomFonts, FONT_DISPLAY, FONT_BODY } from "../utils/fonts";
+
+injectCustomFonts();
 
 const UserLayout = () => {
   return (

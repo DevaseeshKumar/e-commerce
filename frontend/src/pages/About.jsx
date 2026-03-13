@@ -1,3 +1,7 @@
+import { injectCustomFonts, FONT_DISPLAY, FONT_BODY } from "../utils/fonts";
+
+injectCustomFonts();
+
 const About = () => {
   return (
     <div className="min-h-screen px-4 sm:px-6 py-8 sm:py-12 bg-gray-100 dark:bg-black text-gray-900 dark:text-gray-100">

@@ -2,8 +2,12 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useTheme } from "../context/ThemeContext";
 import ConfirmModal from "./ConfirmModal";
+import { injectCustomFonts, FONT_DISPLAY, FONT_BODY } from "../utils/fonts";
 
 import API from '../config/api';
+
+injectCustomFonts();
+
 const UserNavbar = () => {
     const navigate = useNavigate();
     const location = useLocation();

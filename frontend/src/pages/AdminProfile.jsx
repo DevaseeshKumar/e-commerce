@@ -1,7 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
+import { injectCustomFonts, FONT_DISPLAY, FONT_BODY } from "../utils/fonts";
 
 import API from '../config/api';
+
+injectCustomFonts();
+
 const AdminProfile = () => {
     const [user, setUser] = useState(null);
     const [editMode, setEditMode] = useState(false);

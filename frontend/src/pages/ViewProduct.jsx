@@ -2,6 +2,9 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import ConfirmModal from "../components/ConfirmModal";
 import { Link } from "react-router-dom";
+import { injectCustomFonts, FONT_DISPLAY, FONT_BODY } from "../utils/fonts";
+
+injectCustomFonts();
 
 import API from '../config/api';
 const ViewProduct = () => {
@@ -12,6 +15,7 @@ const ViewProduct = () => {
   const [deleteModal, setDeleteModal] = useState({ isOpen: false, productId: null });
   const [editModal, setEditModal] = useState({ isOpen: false, product: null });
   const [detailsModal, setDetailsModal] = useState({ isOpen: false, product: null, loading: false });
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   // For edit form
   const [imageFile, setImageFile] = useState(null);
@@ -50,6 +54,7 @@ const ViewProduct = () => {
   };
 
   const handleViewClick = async (productId) => {
+    setCurrentImageIndex(0);
     setDetailsModal({ isOpen: true, product: null, loading: true });
     try {
       const res = await fetch(`${API}/products/${productId}`, {
@@ -68,9 +73,21 @@ const ViewProduct = () => {
     }
   };
 
+  const previousImage = () => {
+    if (detailsModal.product?.images && detailsModal.product.images.length > 0) {
+      setCurrentImageIndex((prev) => (prev === 0 ? detailsModal.product.images.length - 1 : prev - 1));
+    }
+  };
+
+  const nextImage = () => {
+    if (detailsModal.product?.images && detailsModal.product.images.length > 0) {
+      setCurrentImageIndex((prev) => (prev === detailsModal.product.images.length - 1 ? 0 : prev + 1));
+    }
+  };
+
   const handleEditClick = (p) => {
     setEditModal({ isOpen: true, product: { ...p } });
-    setImagePreview(p.image);
+    setImagePreview(p.images && p.images.length > 0 ? p.images[0] : null);
     setImageFile(null);
   };
 
@@ -178,8 +195,8 @@ const ViewProduct = () => {
                     <td className="p-4 pl-6">
                       <div className="flex items-center gap-4">
                         <div className="w-12 h-12 rounded-lg bg-white dark:bg-black overflow-hidden border border-gray-200 dark:border-white/10 shrink-0">
-                          {p.image ? (
-                            <img src={p.image} alt="" className="w-full h-full object-cover" />
+                          {p.images && p.images.length > 0 ? (
+                            <img src={p.images[0]} alt="" className="w-full h-full object-cover" />
                           ) : (
                             <div className="w-full h-full bg-gradient-to-br from-gray-50 to-gray-200 dark:from-[#252528] dark:to-white/10"></div>
                           )}
@@ -339,7 +356,10 @@ const ViewProduct = () => {
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm animate-in fade-in">
           <div className="card w-full max-w-4xl max-h-[90vh] flex flex-col bg-white dark:bg-[#1C1C1E] text-gray-900 dark:text-gray-100 rounded-2xl shadow-2xl border border-gray-200 dark:border-white/10 animate-scale relative overflow-hidden">
             <button 
-              onClick={() => setDetailsModal({ isOpen: false, product: null, loading: false })}
+              onClick={() => {
+                setCurrentImageIndex(0);
+                setDetailsModal({ isOpen: false, product: null, loading: false });
+              }}
               className="absolute top-4 right-4 z-10 w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 dark:bg-black text-gray-500 hover:text-gray-900 dark:text-gray-400 border border-gray-300 dark:border-white/20 hover:bg-gray-200 dark:hover:bg-white/10 dark:hover:text-gray-100 transition-colors"
             >
               <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
@@ -352,16 +372,60 @@ const ViewProduct = () => {
             ) : detailsModal.product ? (
               <div className="overflow-y-auto w-full p-6 md:p-8 custom-scrollbar">
                 <div className="flex flex-col md:flex-row gap-8">
-                  <div className="w-full md:w-1/2 shrink-0">
-                    <div className="aspect-square rounded-2xl overflow-hidden bg-gray-50 dark:bg-[#252528] border border-gray-200 dark:border-white/10 relative">
-                      {detailsModal.product.image ? (
-                        <img src={detailsModal.product.image} alt={detailsModal.product.name} className="w-full h-full object-cover" />
+                  <div className="w-full md:w-1/2 shrink-0 flex flex-col">
+                    <div className="aspect-square rounded-2xl overflow-hidden bg-gray-50 dark:bg-[#252528] border border-gray-200 dark:border-white/10 relative flex-1">
+                      {detailsModal.product.images && detailsModal.product.images.length > 0 ? (
+                        <>
+                          <img src={detailsModal.product.images[currentImageIndex]} alt={detailsModal.product.name} className="w-full h-full object-cover" />
+                          
+                          {/* Navigation Buttons */}
+                          {detailsModal.product.images.length > 1 && (
+                            <>
+                              <button
+                                onClick={previousImage}
+                                className="absolute left-2 top-1/2 -translate-y-1/2 w-10 h-10 bg-black/50 hover:bg-black/70 text-white rounded-full flex items-center justify-center transition"
+                              >
+                                ❮
+                              </button>
+                              <button
+                                onClick={nextImage}
+                                className="absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 bg-black/50 hover:bg-black/70 text-white rounded-full flex items-center justify-center transition"
+                              >
+                                ❯
+                              </button>
+                              
+                              {/* Image Counter */}
+                              <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/70 text-white px-3 py-1 rounded-full text-sm font-medium">
+                                {currentImageIndex + 1} / {detailsModal.product.images.length}
+                              </div>
+                            </>
+                          )}
+                        </>
                       ) : (
                         <div className="w-full h-full bg-gradient-to-br from-gray-50 to-gray-200 dark:from-[#252528] dark:to-white/10 flex items-center justify-center">
                           <svg className="w-16 h-16 text-gray-400 dark:text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1}><path strokeLinecap="round" strokeLinejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" /></svg>
                         </div>
                       )}
                     </div>
+                    
+                    {/* Thumbnail Gallery */}
+                    {detailsModal.product.images && detailsModal.product.images.length > 1 && (
+                      <div className="flex gap-2 mt-3 overflow-x-auto pb-2">
+                        {detailsModal.product.images.map((image, index) => (
+                          <button
+                            key={index}
+                            onClick={() => setCurrentImageIndex(index)}
+                            className={`w-16 h-16 shrink-0 rounded-lg overflow-hidden border-2 transition ${
+                              currentImageIndex === index
+                                ? 'border-blue-500'
+                                : 'border-gray-300 dark:border-gray-700 hover:border-gray-400'
+                            }`}
+                          >
+                            <img src={image} alt={`${detailsModal.product.name} ${index + 1}`} className="w-full h-full object-cover" />
+                          </button>
+                        ))}
+                      </div>
+                    )}
                   </div>
                   
                   <div className="flex-1 flex flex-col text-left">

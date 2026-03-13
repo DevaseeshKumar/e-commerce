@@ -2,6 +2,9 @@
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import API from "../config/api";
+import { injectCustomFonts, FONT_DISPLAY, FONT_BODY } from "../utils/fonts";
+
+injectCustomFonts();
 
 const AdminDashboard = () => {
 

@@ -1,4 +1,7 @@
 import { useNavigate, useLocation } from "react-router-dom";
+import { injectCustomFonts, FONT_DISPLAY, FONT_BODY } from "../utils/fonts";
+
+injectCustomFonts();
 
 const FloatingHelp = () => {
     const navigate = useNavigate();

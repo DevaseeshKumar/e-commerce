@@ -1,6 +1,9 @@
 import { Outlet } from "react-router-dom";
 import AdminNavbar from "../components/AdminNavbar";
 import Footer from "../components/Footer";
+import { injectCustomFonts, FONT_DISPLAY, FONT_BODY } from "../utils/fonts";
+
+injectCustomFonts();
 
 const AdminLayout = () => {
   return (

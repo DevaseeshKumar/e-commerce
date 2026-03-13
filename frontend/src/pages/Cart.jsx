@@ -2,7 +2,10 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import ConfirmModal from "../components/ConfirmModal";
+import { injectCustomFonts, FONT_DISPLAY, FONT_BODY } from "../utils/fonts";
 import { loadStripe } from "@stripe/stripe-js";
+
+injectCustomFonts();
 
 import API from '../config/api';
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY || "pk_test_TYooMQauvdEDq54NiTphI7jx");
@@ -32,13 +35,23 @@ const Cart = () => {
     };
 
     useEffect(() => {
-        fetchCart();
-
-        const urlParams = new URLSearchParams(globalThis.location.search);
-        if (urlParams.get("payment") === "cancelled") {
-            toast.error("Payment was cancelled");
-            globalThis.history.replaceState({}, '', '/cart');
+        if (!token) {
+            toast.error("Please login to view your cart");
+            navigate("/login");
+            return;
         }
+        
+        const loadCart = async () => {
+            await fetchCart();
+            
+            const urlParams = new URLSearchParams(globalThis.location.search);
+            if (urlParams.get("payment") === "cancelled") {
+                toast.error("Payment was cancelled");
+                globalThis.history.replaceState({}, '', '/cart');
+            }
+        };
+        
+        loadCart();
     }, []);
 
     const updateQuantity = async (productId, newQuantity, maxStock) => {
@@ -107,7 +120,7 @@ const Cart = () => {
         finally { setPlacingOrder(false); }
     };
 
-    const subtotal = cart.reduce((sum, item) => sum + (item.product.price * item.quantity), 0);
+    const subtotal = cart.filter(item => item.product).reduce((sum, item) => sum + (item.product.price * item.quantity), 0);
     const shipping = subtotal === 0 ? 0 : subtotal > 500 ? 0 : 25;
     const total = subtotal + shipping;
 
@@ -122,10 +135,10 @@ const Cart = () => {
             <div className="max-w-7xl mx-auto">
                 <div className="mb-10 animate-in">
                     <h1 className="text-3xl font-bold tracking-tight mb-2">Your Cart</h1>
-                    <p className="text-gray-600 dark:text-gray-400">{cart.length} {cart.length === 1 ? 'item' : 'items'} in your cart</p>
+                    <p className="text-gray-600 dark:text-gray-400">{cart.filter(item => item.product).length} {cart.filter(item => item.product).length === 1 ? 'item' : 'items'} in your cart</p>
                 </div>
 
-                {cart.length === 0 ? (
+                {cart.filter(item => item.product).length === 0 ? (
                     <div className="bg-white dark:bg-[#1C1C1E] border border-gray-200 dark:border-white/10 rounded-2xl shadow-sm p-8 sm:p-16 text-center animate-in" style={{ animationDelay: '100ms' }}>
                         <div className="w-16 h-16 bg-gray-100 dark:bg-black rounded-full flex items-center justify-center mx-auto mb-4 text-gray-400 dark:text-gray-500">
                             <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}><path strokeLinecap="round" strokeLinejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" /></svg>
@@ -138,11 +151,11 @@ const Cart = () => {
                     <div className="grid lg:grid-cols-3 gap-8 items-start">
                         {/* Cart Items */}
                         <div className="lg:col-span-2 space-y-4 animate-in" style={{ animationDelay: '100ms' }}>
-                            {cart.map((item) => (
+                            {cart.filter(item => item.product).map((item) => (
                                 <div key={item.product._id} className="bg-white dark:bg-[#1C1C1E] border border-gray-200 dark:border-white/10 rounded-2xl shadow-sm p-4 sm:p-6 flex flex-col sm:flex-row gap-6 hover:shadow-lg transition-all text-gray-900 dark:text-white">
                                     <div className="w-full sm:w-32 h-32 bg-gray-50 dark:bg-black rounded-xl flex items-center justify-center overflow-hidden border border-gray-200 dark:border-white/10 shrink-0">
-                                        {item.product.image ? (
-                                            <img src={item.product.image} alt={item.product.name} className="w-full h-full object-cover" />
+                                        {item.product.images?.[0] ? (
+                                            <img src={item.product.images[0]} alt={item.product.name} className="w-full h-full object-cover" />
                                         ) : (
                                             <div className="w-full h-full bg-gradient-to-br from-gray-100 dark:from-[#252528] to-gray-200 dark:to-gray-800"></div>
                                         )}

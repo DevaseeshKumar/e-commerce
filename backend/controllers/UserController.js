@@ -195,13 +195,16 @@ const placeOrder = async (req, res) => {
         const { paymentMethod } = req.body;
         const user = await User.findById(req.userId).populate('cart.product');
         if (!user) return res.status(404).json({ error: "User not found" });
-        if (user.cart.length === 0) return res.status(400).json({ error: "Cart is empty" });
+        
+        // Filter out items with null/deleted products
+        const validCartItems = user.cart.filter(item => item.product);
+        if (validCartItems.length === 0) return res.status(400).json({ error: "Cart is empty or contains invalid products" });
 
         // Check stock and build items
         const items = [];
-        for (const cartItem of user.cart) {
-            const product = await Product.findById(cartItem.product._id || cartItem.product);
-            if (!product) return res.status(404).json({ error: `Product not found` });
+        for (const cartItem of validCartItems) {
+            const product = cartItem.product;
+            if (!product) return res.status(404).json({ error: "Product not found" });
             if (product.stock < cartItem.quantity) return res.status(400).json({ error: `${product.name} only has ${product.stock} in stock` });
             items.push({ product: product._id, quantity: cartItem.quantity, price: product.price });
         }
@@ -323,9 +326,27 @@ const cancelOrder = async (req, res) => {
             await Product.findByIdAndUpdate(item.product, { $inc: { stock: item.quantity } });
         }
 
+        // Handle refund for online payments
+        if (order.paymentMethod === "online" && order.paymentStatus === "paid" && order.stripeChargeId) {
+            try {
+                const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+                
+                // Refund the payment using the payment intent
+                const refund = await stripe.refunds.create({
+                    payment_intent: order.stripeChargeId,
+                });
+
+                order.refundId = refund.id;
+                order.paymentStatus = "refunded";
+            } catch (stripeErr) {
+                console.error("Stripe Refund Error:", stripeErr);
+                return res.status(400).json({ error: "Failed to process refund. Please contact support." });
+            }
+        }
+
         order.status = "cancelled";
         await order.save();
-        res.json({ message: "Order cancelled successfully", order });
+        res.json({ message: "Order cancelled successfully and refund processed", order });
     } catch (err) { res.status(500).json({ error: err.message }); }
 };
 
@@ -333,11 +354,15 @@ const createStripeOrder = async (req, res) => {
     try {
         const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
         const user = await User.findById(req.userId).populate('cart.product');
-        if (!user || user.cart.length === 0) return res.status(400).json({ error: "Cart is empty" });
+        if (!user) return res.status(404).json({ error: "User not found" });
+        
+        // Filter out items with null/deleted products
+        const validCartItems = user.cart.filter(item => item.product);
+        if (validCartItems.length === 0) return res.status(400).json({ error: "Cart is empty or contains invalid products" });
 
         const session = await stripe.checkout.sessions.create({
             payment_method_types: ["card"],
-            line_items: user.cart.map(item => ({
+            line_items: validCartItems.map(item => ({
                 price_data: {
                     currency: "usd",
                     product_data: { name: item.product.name, description: item.product.description || "Product" },
@@ -376,25 +401,28 @@ const verifyStripePayment = async (req, res) => {
 
         if (!user) return res.status(404).json({ error: "User not found" });
 
-        // If cart is empty, assume order already fulfilled (prevents duplicate fulfillment on refresh)
-        if (user.cart.length === 0) {
-            return res.json({ message: "Order already processed" });
+        // Filter out items with null/deleted products
+        const validCartItems = user.cart.filter(item => item.product);
+        if (validCartItems.length === 0) {
+            return res.json({ message: "Order already processed or cart is empty" });
         }
 
         const items = [];
-        for (const cartItem of user.cart) {
-            if (cartItem.product) {
-                items.push({ product: cartItem.product._id, quantity: cartItem.quantity, price: cartItem.product.price });
-            }
+        for (const cartItem of validCartItems) {
+            items.push({ product: cartItem.product._id, quantity: cartItem.quantity, price: cartItem.product.price });
         }
 
         const totalPrice = items.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+
+        // Get the charge ID from the session
+        const chargeId = session.payment_intent;
 
         const newOrder = new Order({
             user: userId, items, totalPrice,
             paymentMethod: "online",
             paymentStatus: "paid",
-            status: "pending"
+            status: "pending",
+            stripeChargeId: chargeId
         });
         await newOrder.save();
 
