@@ -25,7 +25,24 @@ const connectDB = async () => {
 };
 connectDB();
 
-app.use(cors({ origin: process.env.CLIENT_URL || "http://localhost:5173" }));
+// CORS configuration - allow both production  and development URLs
+const allowedOrigins = [
+  process.env.CLIENT_URL,
+  'http://localhost:5173',
+  'http://localhost:3000',
+  'https://zhopease.netlify.app',
+  'http://127.0.0.1:3000'
+];
+
+app.use(cors({ 
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  }
+}));
 
 // Stripe Webhook MUST be raw body, so define it before express.json
 app.post('/webhook', express.raw({ type: 'application/json' }), async (req, res) => {
