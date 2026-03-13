@@ -28,10 +28,7 @@ connectDB();
 // CORS configuration - allow both production  and development URLs
 const allowedOrigins = [
   process.env.CLIENT_URL,
-  'http://localhost:5173',
-  'http://localhost:3000',
-  'https://zhopease.netlify.app',
-  'http://127.0.0.1:3000'
+  'http://localhost:5173'
 ];
 
 app.use(cors({ 
